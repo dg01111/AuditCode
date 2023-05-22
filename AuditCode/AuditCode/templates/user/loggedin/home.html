@@ -1,0 +1,151 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file will allow options for the user to view, update, create and delete search for customers, view and send customer audits.
+-->
+<!--Declaration of "/templates/user/loggedin/home.html" file-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/user/loggedin/home.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			User -  Home ALS API
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/user/loggedin/home.html" file.-->
+	<body>
+		<!--Nav-bar enabling navigation for the login section of the user part of the web-app system. To include navigational links to the "/user/loggedin/home" route and the "/user/logout" route.-->
+		<nav id="userHomeNav">
+			<h1>
+				<a href="/user/loggedin/home">
+					User - Audit Log Service API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/user/logout">
+						Logout
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag to display a welcome message to the system user with the system users username which is displayed in Jinja2 from the data provided in the "audithome.py" file.-->
+		<div id="div1">
+			<h2>
+				Welcome to the User - Audit Log Service API Home Page!
+			</h2>
+			<em>
+				Logged in as {{ _userUsername }}.
+			</em>
+				<br>
+				<br>
+			<small>
+				{{ _customerAddedMsg }}
+				{{ _updatedCustomerAccountMsg }}
+				{{ _sentAuditMsg }}
+			</small>
+				<br>
+				<br>
+				<br>
+		</div>
+		<!--Container for links to the system user resources.-->
+		<div id="sideDiv">
+			<h3>
+				Customers
+			</h3>
+			<ol>
+				<li>
+					<a href="/user/loggedin/addcustomer">
+						Add a Customer Account
+					</a>
+				</li>
+				<li>
+					<a href="/user/loggedin/viewcustomers">
+						View Customers
+					</a>
+				</li>
+				<li>
+					<a href="/user/loggedin/updatecustomers">
+						Update Customer Details
+					</a>
+				</li>
+				<li>
+					<a href="/user/loggedin/deletecustomeraccounts">
+						Delete Customers
+					</a>
+				</li>
+			</ol>
+			<h3>
+				<u>
+					Resources
+				<u>
+			</h3>
+			<ol>
+				<li>
+					<a href="/user/loggedin/createsendaudits">
+						Create/Send Audits
+					</a>
+				</li>
+				<li>
+					<a href="/user/loggedin/employedaudits">
+						View Employed Audits
+					</a>
+				</li>
+				<li>
+					<a href="/user/loggedin/selfemployedaudits">
+						View Self Employed Audits
+					</a>
+				</li>					
+			</ol>
+		</div>
+	</body>
+</html>
+<!--
+CSS contents in the below "style" tags.
+-->
+<style>
+
+	/*
+	Use of width with automatic margining to position the "sideDiv" div which contains the navigation for the user part of the ALS API web-app system.
+	*/
+	#sideDiv
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/
+	#div1
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#userHomeNav
+	{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+	
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#userHomeNav a
+	{
+		text-decoration: none;
+	}
+	
+	/*
+	Display for the nav-bar contents to be displayed inline beside each of the list elements of the ordered list.
+	*/	
+	#userHomeNav li
+	{
+		display: inline-block;
+	}
+</style>

@@ -1,0 +1,941 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file is rendered from the "/templates/user/loggedin/home.html" web-page to allow the system user to add a customer account with credentials to login to the "/customer/login" route of the web-app system so the customer can view the audits when sent to the customer from the system user.
+-->
+<!--Declaration of "/templates/user/loggedin/addcustomer.html" file-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/user/loggedin/addcustomer.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			User - Add Customer Account ALS API
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/user/loggedin/addcustomer.html" file.-->
+	<body>
+		<!--Nav-bar enabling navigation for the login section of the user part of the web-app system. To include navigational links to the "/user/loggedin/home" route and the "/user/logout" route.-->
+		<nav id="addCustomerNav">
+			<h1>
+				<a href="/user/loggedin/home">
+					User - Audit Log Service API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/user/logout">
+						Logout
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag to display a welcome message to the system user with the system users username which is displayed in Jinja2 from the data provided in the "audithome.py" file.-->
+		<div id="div1">
+			<h2>
+				Welcome to the User - Audit Log Service API Add Customer Account Page!
+			</h2>
+			<em>
+				Logged in as {{ _userUsername }}.
+			</em>
+				<br>
+				<br>
+			To create a customer account, please enter their details on the form below. Submit the form when finished by pressing the "Add Customer" button.
+		</div>
+		<!--Display a form for the system user to create a customer account. The form will be sent to the "renderhome()" function of the "/user/loggedin/home" route of the "audithome.py" file. The data will be collected and store in the "alsDB.db" database.-->
+		<div id="addCustomerDiv">
+			<form method="POST" action="/user/loggedin/home?f=addCustomer">
+				<h4>
+					<u>
+						Add Customer
+					</u>
+				</h4>
+				<h5>
+					<i>
+						<u>
+							Section 1 - Customer Details(To be filled)
+						</u>
+					</i>
+				</h5>
+				<label>
+					First Name
+				</label>
+					<br>
+				<input type="text" id="customerFirstName" name="customerFirstName" required="True">
+					<br>
+					<br>
+				<label>
+					Last Name
+				</label>
+					<br>
+				<input type="text" id="customerLastName" name="customerLastName" required="True">
+					<br>
+					<br>
+				<label>
+					Date of Birth
+				</label>
+					<br>
+				<input type="date" id="customerDateOfBirth" name="customerDateOfBirth" required="True">
+					<br>
+					<br>
+				<label>
+					Residential Address
+				</label>
+					<br>
+				<textarea rows="5" id="customerResidentialAddress" name="customerResidentialAddress" required="True">
+				</textarea>
+					<br>
+					<br>
+				<label>
+					Residential Move In Date
+				</label>
+					<br>
+				<input type="date" id="customerResidentialMoveInDate" name="customerResidentialMoveInDate" required="True">
+					<br>
+					<br>
+				<label>
+					Phone Number
+				</label>
+					<br>
+				<input type="text" id="customerPhoneNumber" name="customerPhoneNumber" required="True">
+					<br>
+					<br>
+				<label>
+					Email Address
+				</label>
+					<br>
+				<input type="text" id="customerEmailAddress" name="customerEmailAddress" required="True">
+					<br>
+					<br>
+				<label>
+					<h5>
+						<i>
+							<u>
+								Section 2 - Employment Details
+							</u>
+						</i>
+					</h5>
+				</label>
+				<select onclick="showDivEmploymentStatus()" name="customerEmploymentStatus" id="customerEmploymentStatus">
+					<option id="epm" value="Employed">
+						Employed
+					</option>
+					<option value="Self Employed">
+						Self Employed
+					</option>
+					<option value="Government Benefits">
+						Government Benefits
+					</option>
+				</select>
+					<br>
+					<br>
+				<!--Show/Hide "EmployedDiv" on selection of "Employed" option above-->
+				<div id="EmployedDiv" style="display:block;">
+					<label id="customerDateEmploymentCommencedLabel" name="customerDateEmploymentCommencedLabel">
+						Date Employment Commenced
+					</label>
+						<br>
+					<input type="date" id="customerDateEmploymentCommenced" name="customerDateEmploymentCommenced">
+						<br>
+						<br>
+					<label id="customerEmployerNameLabel" name="customerEmployerNameLabel">
+						Employer Name
+					</label>
+						<br>
+					<input type="text" id="customerEmployerName" name="customerEmployerName">
+						<br>
+						<br>
+					<label id="customerEmployerAddressLabel" name="customerEmployerAddressLabel">
+						Employer Address
+					</label>
+						<br>
+					<textarea rows="5" id="customerEmployerAddress" name="customerEmployerAddress">
+					</textarea>
+						<br>
+						<br>
+					<label id="customerEmployerContactNumberLabel" name="customerEmployerContactNumberLabel">
+						Employer Contact Number
+					</label>
+						<br>
+					<input type="text" id="customerEmployerContactNumber" name="customerEmployerContactNumber">
+				</div>
+				<!--Show/Hide "SelfEmployedDiv" on selection of "Self Employed" option above-->
+				<div id="SelfEmployedDiv" style="display:none;">
+					<label id="customerLengthOfTimeAsSelfEmployedLabel" name="customerLengthOfTimeAsSelfEmployedLabel">
+						Length of Time as Self Employed
+					</label>
+						<br>
+					<input type="text" id="customerLengthOfTimeAsSelfEmployed" name="customerLengthOfTimeAsSelfEmployed">
+						<br>
+						<br>
+					<label id="customerCompanyNameLabel" name="customerCompanyNameLabel">
+						Company Name
+					</label>
+						<br>
+					<input type="text" id="customerCompanyName" name="customerCompanyName">
+						<br>
+						<br>
+					<label id="customerCompanyAddressLabel" name="customerCompanyAddressLabel">
+						Company Address
+					</label>
+						<br>
+					<textarea rows="5" id="customerCompanyAddress" name="customerCompanyAddress">
+					</textarea>
+				</div>
+				<!--Show/Hide "GovernmentBenefitsDiv" on selection of "Self Employed" option above-->
+				<div id="GovernmentBenefitsDiv" style="display:none;">
+					<label id="customerGovernmentBenefitsDescriptionLabel" name="customerGovernmentBenefitsDescriptionLabel">
+						Description<label><br>
+					<input type="text" id="customerGovernmentBenefitsDescription" name="customerGovernmentBenefitsDescription">
+				</div>
+					<br>
+				<div id="Income">
+					<h5>
+						<u>
+							<i>
+								Section 3 - Income
+							</i>
+						</u>
+					</h5>
+					<label>
+						Gross Monthly Income
+					</label>
+						<br>
+					<input type="number" step="0.01" id="customerGrossMonthlyIncome" name="customerGrossMonthlyIncome" required="True">
+						<br>
+						<br>
+					<label>
+						Yearly Income after Tax
+					</label>
+						<br>
+					<input type="number" step="0.01" id="customerYearlyIncomeAfterTax" name="customerYearlyIncomeAfterTax" required="True">
+						<br>
+						<br>
+				</div>
+				<div id="Expenses">
+					<label>
+						<h5>
+							<u>
+								<i>
+									Section 4 - Types of Weekly Expenses and Costs
+								</i>
+							</u>
+						</h5>
+						<small>
+							Note: Press "Calculate Expenses" button to calculate and save the total amount of expenses.
+						</small>
+					</label>	
+						<br>
+						<br>
+					<label for="customerMotorCostsLabel">
+						<i>
+							<u>
+								Motor Costs
+							</u>
+						</i>
+					</label>
+					<input onclick="showExpensesDiv()" type="checkbox" class="check" id="customerMotorCosts" name="customerMotorCosts" value="Motor Costs">
+						<br>
+					<div id="customerMotorCostsDiv" style="display: none;">
+						<label id="customerMotorCostsDescriptionLabel" name="customerMotorCostsDescriptionLabel">
+							Motor Costs Description
+						</label>
+							<br>
+						<input type="text" id="customerMotorCostsDescription" name="customerMotorCostsDescription">
+							<br>
+							<br>
+						<label id="customerMotorCostsAmountLabel" name="customerMotorCostsAmountLabel">
+							Motor Costs Amount
+						</label>
+							<br>
+						<input type="number"  step="0.01" id="customerMotorCostsAmount" name="customerMotorCostsAmount" value="0.00">
+							<br>
+							<br>
+					</div>
+						<br>
+					<label for="customerFoodExpensesLabel">
+						<i>
+							<u>
+								Food Expenses
+							</u>
+						</i>
+					</label>
+					<input onclick="showExpensesDiv()" type="checkbox" class="check" id="customerFoodExpenses" name="customerFoodExpenses" value="Food Expenses">
+						<br>
+				<div id="customerFoodExpensesDiv" style="display:none">
+					<label id="customerFoodExpensesDescriptionLabel" name="customerFoodExpensesDescriptionLabel">
+						Food Expenses Description
+					</label>
+						<br>
+					<input type="text" id="customerFoodExpensesDescription" name="customerFoodExpensesDescription">
+						<br>
+						<br>
+					<label id="customerFoodExpensesDescriptionAmountLabel" name="customerFoodExpensesDescriptionAmountLabel">
+						Food Expenses Amount
+					</label>
+						<br>
+					<input type="number"  step="0.01" id="customerFoodExpensesAmount" name="customerFoodExpensesAmount" value="0.00"><br><br>
+				</div>
+					<br>
+				<label for="customerClothingExpensesLabel">
+					<u>
+						<i>
+							Clothing Expenses
+						</i>
+					</u>
+				</label>
+				<input type="checkbox" onclick="showExpensesDiv()" class="check" id="customerClothingExpenses" name="customerClothingExpenses" value="Clothing Expenses">
+					<br>
+				<div id="customerClothingExpensesDiv" style="display:none;">
+					<label id="customerClothingExpensesDescriptionLabel" name="customerClothingExpensesDescriptionLabel">
+						Clothing Expenses Description
+					</label>
+						<br>
+					<input type="text" id="customerClothingExpensesDescription" name="customerClothingExpensesDescription">
+						<br>
+						<br>
+					<label id="customerClothingExpensesAmountLabel" name="customerClothingExpensesAmountLabel">
+						Clothing Expenses Amount
+					</label>
+						<br>
+					<input type="number"  step="0.01" id="customerClothingExpensesAmount" name="customerClothingExpensesAmount" value="0.00">
+						<br>
+						<br>
+				</div>
+					<br>
+				<label for="customerChildcareCosts">
+					<i>
+						<u>
+							Childcare Costs
+						</u>
+					</i>
+				</label>
+				<input type="checkbox" onclick="showExpensesDiv()" id="customerChildcareCosts" name="customerChildcareCosts" value="Childcare Costs">
+					<br>
+				<div id="customerChildcareCostsDiv" style="display:none;">
+					<label id="childcareCostsDescriptionLabel" name="childcareCostsDescriptionLabel">
+						Childcare Costs Description
+					</label>
+						<br>
+					<input type="text" id="customerChildcareCostsDescription" name="customerChildcareCostsDescription">
+						<br>
+						<br>
+					<label id="customerChildcareCostsAmountLabel" name="customerChildcareCostsAmountLabel">
+						Childcare Costs Amount
+					</label>
+						<br>
+					<input type="number"  step="0.01" id="customerChildcareCostsAmount" name="customerChildcareCostsAmount" value="0.00">
+						<br>
+						<br>
+				</div>
+					<br>
+				<label for="customerHousingExpensesLabel">
+					<i>
+						<u>
+							Housing Expenses
+						</u>
+					</i>
+				</label>
+				<input type="checkbox" onclick="showExpensesDiv()" id="customerHousingExpenses" name="customerHousingExpenses" value="Housing Expenses">
+					<br>
+				<div id="customerHousingExpensesDiv" style="display:none;"> 
+					<label id="customerHousingExpensesDescriptionLabel" name="customerHousingExpensesDescriptionLabel">
+						Housing Expenses Description
+					</label>
+						<br>
+					<input type="text" id="customerHousingExpensesDescription" name="customerHousingExpensesDescription">
+						<br>
+						<br>
+					<label id="customerHousingExpensesAmountLabel" name="customerHousingExpensesAmountLabel">
+						Housing Expenses Amount
+					</label>
+						<br>
+					<input type="number"  step="0.01" id="customerHousingExpensesAmount" name="customerHousingExpensesAmount" value="0.00">
+						<br>
+						<br>
+				</div>
+					<br>
+				<label for="customerHomeRentalCostsLabel">
+					<i>
+						<u>
+							Home Rental Costs
+						</u>
+					</i>
+				</label>
+				<input  type="checkbox"onclick="showExpensesDiv()"  id="customerHomeRentalCosts" name="customerHomeRentalCosts" value="Home Rental Costs">
+					<br>
+				<div id="customerHomeRentalCostsDiv" style="display:none">
+					<label id="customerHomeRentalCostsDescriptionLabel" name="customerHomeRentalCostsDescriptionLabel">
+						Home Rental Costs Description
+					</label>
+						<br>
+					<input type="text" id="customerHomeRentalCostsDescription" name="customerHomeRentalCostsDescription">
+						<br>
+						<br>
+					<label id="customerHomeRentalCostsAmountLabel" name="customerHomeRentalCostsAmountLabel">
+						Home Rental Costs Amount
+					</label>
+						<br>
+					<input type="number"  step="0.01" id="customerHomeRentalCostsAmount" name="customerHomeRentalCostsAmount" value="0.00">
+						<br>
+						<br>
+				</div>
+					<br>
+				<label for="customerMortgageRepaymentsLabel">
+					<i>
+						<u>
+							Mortgage Repayments
+						</u>
+					</i>
+				</label>
+				<input type="checkbox"onclick="showExpensesDiv()"  id="customerMortgageRepayments" name="customerMortgageRepayments" value="Mortgage Replayments">
+					<br>
+				<div id="customerMortgageRepaymentsDiv" style="display:none;">
+					<label id="customerMortgageRepaymentsDescriptionLabel" name="customerMortgageRepaymentsDescriptionLabel">
+						Mortgage Repayments Description
+					</label>
+						<br>
+					<input type="text" id="customerMortgageRepaymentsDescription" name="customerMortgageRepaymentsDescription">
+						<br>
+						<br>
+					<label id="customerMortgageRepaymentsAmountLabel" name="customerMortgageRepaymentsAmountLabel">
+						Mortgage Repayments Amount
+					</label>
+						<br>
+					<input type="number"  step="0.01" id="customerMortgageRepaymentsAmount" name="customerMortgageRepaymentsAmount" value="0.00">
+						<br>
+						<br>
+				</div>
+					<br>
+				<label for="customerUtilityCostsLabel">
+					<i>
+						<u>
+							Utility Costs
+						</u>
+					</i>
+				</label>
+				<input type="checkbox" id="customerUtilityCosts"onclick="showExpensesDiv()"  name="customerUtilityCosts" value="Utility Costs">
+					<br>
+				<div id="customerUtilityCostsDiv" style="display:none;">
+					<label id="customerUtilityCostsDescriptionLabel" name="customerUtilityCostsDescriptionLabel">
+						Utility Costs Description
+					</label>
+						<br>
+					<input type="text" id="customerUtilityCostsDescription" name="customerUtilityCostsDescription">
+						<br>
+						<br>
+					<label id="customerUtilityCostsAmountLabel" name="customerUtilityCostsAmountLabel">
+						Utility Costs Amount
+					</label>
+						<br>
+					<input type="number"  step="0.01" id="customerUtilityCostsAmount" name="customerUtilityCostsAmount" value="0.00">
+						<br>
+						<br>
+				</div>
+					<br>
+				<label for="customerPhoneExpensesLabel">
+					<i>
+						<u>
+							Phone Expenses
+						</u>
+					</i>
+				</label>
+				<input type="checkbox" onclick="showExpensesDiv()" id="customerPhoneExpenses" name="customerPhoneExpenses" value="Phone Expenses">
+					<br>
+				<div id="customerPhoneExpensesDiv" style="display:none;">
+					<label id="customerPhoneExpensesLabel" name="customerPhoneExpensesLabel">
+						Phone Expenses Description
+					</label>
+						<br>
+					<input type="text" id="customerPhoneExpensesDescription" name="customerPhoneExpensesDescription">
+						<br>
+						<br>
+					<label id="customerPhoneExpensesAmountLabel" name="customerPhoneExpensesAmountLabel">
+						Phone Expenses Amount
+					</label>
+						<br>
+					<input type="number"  step="0.01" id="customerPhoneExpensesAmount" name="customerPhoneExpensesAmount" value="0.00">
+						<br>
+						<br>
+				</div>
+					<br>
+				<label for="customerOtherExpenses">
+					<i>
+						<u>
+							Other Expenses
+						</u>
+					</i>
+				</label>
+				<input type="checkbox" onclick="showExpensesDiv()" id="customerOtherExpenses" name="customerOtherExpenses" value="Other Expenses">	
+					<br>
+				<div id="customerOtherExpensesDiv" style="display:none;">
+					<label id="customerOtherExpensesDescriptionLabel" name="customerOtherExpensesDescriptionLabel">
+						Other Expenses Description
+					</label>
+						<br>
+					<input type="text" id="customerOtherExpensesDescription" name="customerOtherExpensesDescription">
+						<br>
+						<br>
+					<label id="customerOtherExpensesAmountLabel" name="customerOtherExpensesAmountLabel">
+						Other Expenses Amount
+					</label>
+						<br>
+					<input type="number"  step="0.01" id="customerOtherExpensesAmount" name="customerOtherExpensesAmount" value="0.00">
+						<br>
+						<br>
+				</div>
+					<br>
+				<input type="button" id="calculateExpenses" name="calculateExpenses" onclick="showTotalExpenses()" value="Calculate Expenses">
+					<br>
+					<br>
+				<div id="showTotalExpensesDiv" style="display:none;">
+					<label id="totalExpensesLabel" name="totalExpensesLabel">
+						Total Expenses
+					</label>
+						<br>
+					<input type="text" name="customerTotalExpensesAmount" id="totalExpenses">
+				</div>
+					<br>
+					<br>
+				<h5>
+					<i>
+						<u>
+							Section 5 - Customer Account Details
+						</u>
+					</i>
+				</h5>
+				<label id="customerUsernameLabel" name="customerUsernameLabel">
+					Customer Username
+				</label>
+					<br>
+				<input type="text" id="customerUsername" name="customerUsername">
+					<br>
+					<br>
+				<label id="customerPasswordLabel" name="customerPasswordLabel">
+					Customer Password
+				</label>
+					<br>
+				<input type="text" id="customerPassword" name="customerPassword">
+					<br>
+					<br>
+					<br>
+				<button name="addCustomerBtn" type="submit">
+					Add Customer
+				</button>
+					<br>
+					<br>
+			</form>		
+		</div>
+	</body>
+</html>
+<!--JavaScript contains different displays for dvs and content in the above form "addCustomer"-->
+<script type="text/javascript">
+
+	//Show/hide the divs for employment details with the "showDivEmploymentStatus()" function. Collect the elemental ID's useed and change the display when another option of the employment status's have been changed.
+	function showDivEmploymentStatus()
+	{
+	
+		//Initialise variables to use in "showDivEmploymentStatus()" function, storing the div ID's as variables  and enabling the div's to be displayed using "block" or "none" styles to the system user upon the value of the "customerEmploymentStatus" selecft option being changed.
+		
+		//Get the select option with ID "customerEmploymentStatus" and store in the employmentStatus variable.
+		var employmentStatus = document.getElementById("customerEmploymentStatus");
+		
+		//Get the div with the ID "EmployedDiv" stored in the "EmployedDiv" variable.
+		var employedDiv = document.getElementById("EmployedDiv");
+
+		//Get the div with the ID "SelfEmployedDiv" stored in the "SelfEmployedDiv" variable.
+		var selfEmployedDiv = document.getElementById("SelfEmployedDiv");
+		
+		//Get the div with the ID "GovernmentBenefitsDiv" stored in the "governmentBenefitsDiv" variable.		
+		var governmentBenefitsDiv = document.getElementById("GovernmentBenefitsDiv");
+		
+		//Check if the "employmentStatus" variables value is "Employed" and if is then display the "EmployedDiv" div and do not show the "SelfEmployedDiv" div or the "governmentBenefitsDiv" div.
+		if (employmentStatus.value == "Employed")
+		{
+		
+			//Set the style of the "employedDiv" variables display to "block" to be displayed to the system user.
+			employedDiv.style.display = "block";
+			
+			//Set the style of the "selfEmployedDiv" variables display to "none" to not be displayed to the system user.
+			selfEmployedDiv.style.display = "none";
+			
+			//Set the style of the "employedDiv" variables display to "none" to not be displayed to the system user.
+			governmentBenefitsDiv.style.display = "none";
+		}
+		
+		//Check if the "employmentStatus" variables value is "Self Employed" and if is then display the "selfEmployedDiv" div and do not show the "employedDiv" div or the "governmentBenefitsDiv" div.
+		else if (employmentStatus.value == "Self Employed")
+		{
+		
+			//Set the style of the "employedDiv" variables display to "none" to not be displayed to the system user.
+			employedDiv.style.display = "none";
+			
+			//Set the style of the "selfEmployedDiv" variables display to "block" to be displayed to the system user.
+			selfEmployedDiv.style.display = "block";
+			
+			//Set the style of the "governmentBenefitsDiv" variables display to "none" to not be displayed to the system user.
+			governmentBenefitsDiv.style.display = "none";
+		}
+		
+		//Check if the "employmentStatus" variables value is "Government Benefits" and if is then display the "employedDiv" div and do not show the "employedDiv" div or the "governmentBenefitsDiv" div.
+		else if (employmentStatus.value = "Government Benefits")
+		{
+		
+			//Set the style of the "employedDiv" variables display to "none" to not be displayed to the system user.
+			employedDiv.style.display = "none";
+			
+			//Set the style of the "selfEmployedDiv" variables display to "none" to not be displayed to the system user.
+			selfEmployedDiv.style.display = "none";
+			
+			//Set the style of the "governmentBenefitsDiv" variables display to "block" to be displayed to the system user.
+			governmentBenefitsDiv.style.display = "block";
+		}
+	}
+	
+	//Show/hide the divs for each checkbox that is checked for the tyoes of expenses and costs within the "showDivsExpenses()" function. Collect and store the element ID's of the costs and the div's for each of the expenses.
+	function showExpensesDiv()
+	{
+	
+		//Initialise variables to use in showDivsExpenses() Function storing the div ID's as variables and also storing the checkbox ID's in a variable to check when the checkbox has been checked and enabling the checkbox's corrersponding div's to be displayed using "block" or "none" styles to the system user when the checkbox is checked or un-checked.
+		
+		//Get and store the ID for the "customerMotorCosts" checkbox in the "customerMotorCosts" variable.
+		var customerMotorCosts = document.getElementById("customerMotorCosts");
+		
+		//Get and store the ID for the "customerMotorCostsDiv" div in the "customerMotorCostsDiv" variable.
+		var customerMotorCostsDiv = document.getElementById("customerMotorCostsDiv");	
+		
+		//Get and store the ID for the "customerFoodExpenses" checkbox in the "customerFoodExpenses" variable.
+		var customerFoodExpenses = document.getElementById("customerFoodExpenses");
+		
+		//Get and store the ID for the "customerFoodExpensesDiv" div in the "customerFoodExpensesDiv" variable.
+		var customerFoodExpensesDiv = document.getElementById("customerFoodExpensesDiv");
+		
+		//Get and store the ID for the "customerClothingExpenses" checkbox in the "customerClothingExpenses" variable.
+		var customerClothingExpenses = document.getElementById("customerClothingExpenses");
+
+		//Get and store the ID for the "customerClothingExpensesDiv" div in the "customerClothingExpensesDiv" variable.
+		var customerClothingExpensesDiv = document.getElementById("customerClothingExpensesDiv");
+		
+		//Get and store the ID for the "customerChildCareCosts" checkbox in the "customerChildcareCosts" variable.		
+		var customerChildcareCosts= document.getElementById("customerChildcareCosts");
+		
+		//Get and store the ID for the "customerChildCareCostsDiv" div in the "customerChildcareCostsDiv" variable.		
+		var customerChildcareCostsDiv = document.getElementById("customerChildcareCostsDiv");
+		
+		//Get and store the ID for the "customerHousingExpenses" checkbox in the "customerHousingExpenses" variable.		
+		var customerHousingExpenses = document.getElementById("customerHousingExpenses");
+		
+		//Get and store the ID for the "customerChildCareCostsDiv" div in the "customerChildcareCostsDiv" variable.				
+		var customerHousingExpensesDiv = document.getElementById("customerHousingExpensesDiv");
+		
+		//Get and store the ID for the "customerHomeRentalCosts" checkbox in the "customerHomeRentalCosts" variable.		
+		var customerHomeRentalCosts= document.getElementById("customerHomeRentalCosts");
+		
+		//Get and store the ID for the "customerHomeRentalCostsDiv" checkbox in the "customerHomeRentalCostsDiv" variable.		
+		var customerHomeRentalCostsDiv = document.getElementById("customerHomeRentalCostsDiv");
+
+		//Get and store the ID for the "customerMortgageRepayments" checkbox in the "customerMortgageRepayments" variable.
+		var customerMortgageRepayments = document.getElementById("customerMortgageRepayments");
+
+		//Get and store the ID for the "customerMortgageRepaymentsDiv" div in the "customerMortgageRepaymentsDiv" variable.
+		var customerMortgageRepaymentsDiv = document.getElementById("customerMortgageRepaymentsDiv");
+		
+		//Get and store the ID for the "customerUtilityCosts" checkbox in the "customerUtilityCosts" variable.
+		var customerUtilityCosts = document.getElementById("customerUtilityCosts");
+		
+		//Get and store the ID for the "customerUtilityCostsDiv" div in the "customerUtilityCostsDiv" variable.
+		var customerUtilityCostsDiv = document.getElementById("customerUtilityCostsDiv");
+		
+		//Get and store the ID for the "customerPhoneExpenses" checkbox in the "customerPhoneExpenses" variable.
+		var customerPhoneExpenses = document.getElementById("customerPhoneExpenses");
+		
+		//Get and store the ID for the "customerPhoneExpensesDiv" div in the "customerPhoneExpensesDiv" variable.
+		var customerPhoneExpensesDiv = document.getElementById("customerPhoneExpensesDiv");
+		
+		//Get and store the ID for the "customerOtherExpenses" checkbox in the "customerOtherExpenses" variable.
+		var customerOtherExpenses = document.getElementById("customerOtherExpenses");
+		
+		//Get and store the ID for the "customerPhoneExpensesDiv" div in the "customerPhoneExpensesDiv" variable.
+		var customerOtherExpensesDiv = document.getElementById("customerOtherExpensesDiv");	
+
+		//If the "customerMotorCosts" checkbox is checked then the "cutomerMotorCostsDiv" div style is changed to "block" and the system user can input the "customerMotorCostsDiv" data.
+		if (customerMotorCosts.checked == true)
+		{
+			
+			//Style the "customerMotorCostsDiv" div from "none" to "block" so the "customerMotorCostsDiv" div is displayed to the system user when the "customerMotorCosts" checkbox is checked.
+			customerMotorCostsDiv.style.display = "block";
+		}
+		
+		//If the "customerMotorCosts" checkbox is not checked or un-checked then the "customerMotorCostsDiv" div style is changed to "none" and the "customerMotorCostsDiv" div is not displayed to the user.
+		else if (customerMotorCosts.checked == false)
+		{
+			
+			//Style the "customerMotorCostsDiv" div from "block" to "none" so the "customerMotorCostsDiv" div is not displayed to the system user when the "customerMotorCosts" checkbox is un-checked or not checked.			
+			customerMotorCostsDiv.style.display = "none";
+		}
+
+		//If the "customerFoodExpenses" checkbox is checked then the "customerFoodExpensesDiv" div style is changed to "block" and the system user can input the "customerFoodExpenses" data.
+		if (customerFoodExpenses.checked == true)
+		{
+			
+			//Style the "customerFoodExpensesDiv" div from "none" to "block" so the "customerFoodExpensesDiv" div is displayed to the system user when the "customerFoodExpenses" checkbox is checked.		
+			customerFoodExpensesDiv.style.display = "block";
+		}
+		
+		//If the "customerFoodExpenses" checkbox is not checked or un-checked then the "customerFoodExpensesDiv" div style is changed to "none" and the "customerFoodExpensesDiv" div is not displayed to the user.
+		else if (customerFoodExpenses.checked == false)
+		{
+		
+			//Style the "customerFoodExpensesDiv" div from "block" to "none" so the "customerFoodExpensesDiv" div is not displayed to the system user when the "customerFoodExpenses" checkbox is un-checked or not checked.					
+			customerFoodExpensesDiv.style.display = "none";
+		}
+		
+		//If the "customerClothingExpenses" checkbox is checked then the "customerClothingExpensesDiv" div style is changed to "block" and the system user can input the "customerClothingExpenses" data.
+		if (customerClothingExpenses.checked == true)
+		{
+		
+			//Style the "customerClothingExpensesDiv" div from "none" to "block" so the "customerClothingExpensesDiv" div is displayed to the system user when the "customerClothingExpenses" checkbox is checked.		
+			customerClothingExpensesDiv.style.display = "block";
+		}
+
+		//If the "customerClothingExpenses" checkbox is not checked or un-checked then the "customerClothingExpensesDiv" div style is changed to "none" and the "customerClothingExpensesDiv" div is not displayed to the user.
+		else if (customerClothingExpenses.checked == false)
+		{
+
+			//Style the "customerClothingExpensesDiv" div from "block" to "none" so the "customerClothingExpensesDiv" div is not displayed to the system user when the "customerClothingExpenses" checkbox is un-checked or not checked.					
+			customerClothingExpensesDiv.style.display = "none";
+		}
+		
+		//If the "customerChildCareCosts" checkbox is checked then the "customerChildcareCostsDiv" div style is changed to "block" and the system user can input the "customerChildcareCosts" data.
+		if (customerChildcareCosts.checked == true)
+		{
+		
+			//Style the "customerChildcareCostsDiv" div from "none" to "block" so the "customerChildcareCostsDiv" div is displayed to the system user when the "customerChildcareCosts" checkbox is checked.		
+			customerChildcareCostsDiv.style.display = "block";
+		}
+
+		//If the "customerChildcareCosts" checkbox is not checked or un-checked then the "customerChildcareCostsDiv" div style is changed to "none" and the "customerChildcareCostsDiv" div is not displayed to the user.
+		else if (customerChildcareCosts.checked == false)
+		{
+		
+			//Style the "customerChildcareCostsDiv" div from "block" to "none" so the "customerChildcareCostsDiv" div is not displayed to the system user when the "customerChildcareCosts" checkbox is un-checked or not checked.					
+			customerChildcareCostsDiv.style.display = "none";
+		}
+		
+		//If the "customerHousingExpenses" checkbox is checked then the "customerHousingExpensesDiv" div style is changed to "block" and the system user can input the "customerHousingExpenses" data.
+		if (customerHousingExpenses.checked == true)
+		{
+		
+			//Style the "customerHousingExpensesDiv" div from "none" to "block" so the "customerHousingExpensesDiv" div is displayed to the system user when the "customerHousingExpenses" checkbox is checked.		
+			customerHousingExpensesDiv.style.display = "block";
+		}
+		
+		//If the "customerHousingExpenses" checkbox is not checked or un-checked then the "customerHousingExpensesDiv" div style is changed to "none" and the "customerHousingExpensesDiv" div is not displayed to the user.		
+		else if (customerHousingExpenses.checked == false)
+		{
+		
+			//Style the "customerHousingExpensesDiv" div from "block" to "none" so the "customerHousingExpensesDiv" div is not displayed to the system user when the "customerHousingExpenses" checkbox is un-checked or not checked.					
+			customerHousingExpensesDiv.style.display = "none";
+		}
+		
+		//If the "customerHomeRentalCosts" checkbox is checked then the "customerHomeRentalCostsDiv" div style is changed to "block" and the system user can input the "customerHomeRentalCosts" data.
+		if (customerHomeRentalCosts.checked == true)
+		{
+		
+			//Style the "customerHomeRentalCostsDiv" div from "none" to "block" so the "customerHomeRentalCostsDiv" div is displayed to the system user when the "customerHomeRentalCosts" checkbox is checked.		
+			customerHomeRentalCostsDiv.style.display = "block";
+		}
+		
+		//If the "customerHomeRentalCosts" checkbox is not checked or un-checked then the "customerHomeRentalCostsDiv" div style is changed to "none" and the "customerHomeRentalCostsDiv" div is not displayed to the user.		
+		else if (customerHomeRentalCosts.checked == false)
+		{
+		
+			//Style the "customerHomeRentalCostsDiv" div from "block" to "none" so the "customerHomeRentalCostsDiv" div is not displayed to the system user when the "customerHomeRentalCosts" checkbox is un-checked or not checked.					
+			customerHomeRentalCostsDiv.style.display = "none";
+		}
+		
+		//If the "customerMortgageRepayments" checkbox is checked then the "customerMortgageRepaymentsDiv" div style is changed to "block" and the system user can input the "customerMortgageRepaymentsDiv" data.
+		if (customerMortgageRepayments.checked == true)
+		{
+		
+			//Style the "customerMortgageRepaymentsDiv" div from "none" to "block" so the "customerMortgageRepaymentsDiv" div is displayed to the system user when the "customerMortgageRepayments" checkbox is checked.		
+			customerMortgageRepaymentsDiv.style.display = "block";
+		}
+		
+		//If the "customerMortgageRepayments" checkbox is not checked or un-checked then the "customerMortgageRepaymentsDiv" div style is changed to "none" and the "customerMortgageRepaymentsDiv" div is not displayed to the user.		
+		else if (customerMortgageRepayments.checked == false)
+		{
+		
+			//Style the "customerMortgageRepaymentsDiv" div from "block" to "none" so the "customerMortgageRepaymentsDiv" div is not displayed to the system user when the "customerMortgageRepayments" checkbox is un-checked or not checked.					
+			customerMortgageRepaymentsDiv.style.display = "none";
+		}
+		
+		//If the "customerUtilityCosts" checkbox is checked then the "customerUtilityCostsDiv" div style is changed to "block" and the system user can input the "customerUtilityCosts" data.
+		if (customerUtilityCosts.checked == true)
+		{
+		
+			//Style the "customerUtilityCostsDiv" div from "none" to "block" so the "customerUtilityCostsDiv" div is displayed to the system user when the "customerUtilityCosts" checkbox is checked.		
+			customerUtilityCostsDiv.style.display = "block";
+		}
+		
+		//If the "customerUtilityCosts" checkbox is not checked or un-checked then the "customerUtilityCostsDiv" div style is changed to "none" and the "customerUtilityCostsDiv" div is not displayed to the user.
+		else if (customerUtilityCosts.checked == false)
+		{
+		
+			//Style the "customerUtilityCostsDiv" div from "block" to "none" so the "customerUtilityCostsDiv" div is not displayed to the system user when the "customerUtilityCosts" checkbox is un-checked or not checked.					
+			customerUtilityCostsDiv.style.display = "none";
+		}
+
+		//If the "customerPhoneExpenses" checkbox is checked then the "customerPhoneExpensesDiv" div style is changed to "block" and the system user can input the "customerPhoneExpenses" data.
+		if (customerPhoneExpenses.checked == true)
+		{
+		
+			//Style the "customerPhoneExpensesDiv" div from "none" to "block" so the "customerPhoneExpensesDiv" div is displayed to the system user when the "customerPhoneExpenses" checkbox is checked.		
+			customerPhoneExpensesDiv.style.display = "block";
+		}
+		
+		//If the "customerPhoneExpenses" checkbox is not checked or un-checked then the "customerPhoneExpensesDiv" div style is changed to "none" and the "customerPhoneExpensesDiv" div is not displayed to the user.
+		else if (customerPhoneExpenses.checked == false)
+		{
+		
+			//Style the "customerPhoneExpensesDiv" div from "block" to "none" so the "customerPhoneExpensesDiv" div is not displayed to the system user when the "customerPhoneExpenses" checkbox is un-checked or not checked.
+			customerPhoneExpensesDiv.style.display = "none";
+		}
+		
+		//If the "customerOtherExpenses" checkbox is checked then the "customerOtherExpensesDiv" div style is changed to "block" and the system user can input the "customerOtherExpenses" data.
+		if (customerOtherExpenses.checked == true)
+		{
+		
+			//Style the "customerOtherExpensesDiv" div from "none" to "block" so the "customerOtherExpensesDiv" div is displayed to the system user when the "customerOtherExpenses" checkbox is checked.		
+			customerOtherExpensesDiv.style.display = "block";
+		}
+		
+		//If the "customerOtherExpenses" checkbox is not checked or un-checked then the "customerOtherExpensesDiv" div style is changed to "none" and the "customerOtherExpensesDiv" div is not displayed to the user.
+		else if (customerOtherExpenses.checked == false)
+		{
+		
+			//Style the "customerOtherExpensesDiv" div from "block" to "none" so the "customerOtherExpensesDiv" div is not displayed to the system user when the "customerOtherExpenses" checkbox is un-checked or not checked.
+			customerOtherExpensesDiv.style.display = "none";
+		}
+	}
+	
+	//The "addExpenses()" function stores the customer expenses that have been inputted by the system user as a floated numberical variable, adds all of those variables together and returns the total sum to be used in the "showTotalExpenses" function.
+	function addExpenses()
+	{
+	
+		//Initialises the expenses amounts from the inputs in the above form as variables for the expenses total to be parsed as a float.
+		
+		//Get and store the value for the "customerMotorCostsAmount" variable from the "customerMotorCostsAmount" inputs elemented ID.
+		var customerMotorCostsAmount = parseFloat(document.getElementById("customerMotorCostsAmount").value);		
+		
+		//Get and store the value for the "customerFoodExpensesAmount" variable from the "customerFoodExpensesAmount" inputs elemented ID.		
+		var customerFoodExpensesAmount = parseFloat(document.getElementById("customerFoodExpensesAmount").value);
+		
+		//Get and store the value for the "customerClothingExpensesAmount" variable from the "customerClothingExpensesAmount" inputs elemented ID.		
+		var customerClothingExpensesAmount = parseFloat(document.getElementById("customerClothingExpensesAmount").value);
+
+		//Get and store the value for the "customerChildcareCostsAmount" variable from the "customerChildcareCostsAmount" inputs elemented ID.		
+		var customerChildcareCostsAmount = parseFloat(document.getElementById("customerChildcareCostsAmount").value);
+		
+		//Get and store the value for the "customerHousingExpensesAmount" variable from the "customerHousingExpensesAmount" inputs elemented ID.		
+		var customerHousingExpensesAmount = parseFloat(document.getElementById("customerHousingExpensesAmount").value);
+		
+		//Get and store the value for the "customerHomeRentalCostsAmount" variable from the "customerHomeRentalCostsAmount" inputs elemented ID.		
+		var customerHomeRentalCostsAmount = parseFloat(document.getElementById("customerHomeRentalCostsAmount").value);
+
+		//Get and store the value for the "customerMortgageRepaymentsAmount" variable from the "customerMortgageRepaymentsAmount" inputs elemented ID.		
+		var customerMortgageRepaymentsAmount = parseFloat(document.getElementById("customerMortgageRepaymentsAmount").value);
+		
+		//Get and store the value for the "customerUtilityCostsAmount" variable from the "customerUtilityCostsAmount" inputs elemented ID.		
+		var customerUtilityCostsAmount = parseFloat(document.getElementById("customerUtilityCostsAmount").value);
+		
+		//Get and store the value for the "customerPhoneExpensesAmount" variable from the "customerPhoneExpensesAmount" inputs elemented ID.		
+		var customerPhoneExpensesAmount = parseFloat(document.getElementById("customerPhoneExpensesAmount").value);
+
+		//Get and store the value for the "customerOtherExpensesAmount" variable from the "customerOtherExpensesAmount" inputs elemented ID.		
+		var customerOtherExpensesAmount = parseFloat(document.getElementById("customerOtherExpensesAmount").value);
+		
+		//Store in the "totalExpenses" the sum of the expenses of all the variabls which store the expenses.
+		var totalExpenses= customerMotorCostsAmount + customerFoodExpensesAmount + customerClothingExpensesAmount + customerChildcareCostsAmount + customerHousingExpensesAmount + customerHomeRentalCostsAmount + customerMortgageRepaymentsAmount + customerUtilityCostsAmount + customerPhoneExpensesAmount + customerOtherExpensesAmount;
+
+		//Return the "totalExpenses" variable to be displayed to the input element with the "totalExpenses" ID.
+		return totalExpenses;
+	}
+	
+	//The "showTotalExpenses()" function displays the "showExpensesDiv" div when the "calcExpenses" button is pressed.and changes the value of the input element with the ID "totalExpenses" to the return value from the "addExpenses()" function. 
+	function showTotalExpenses()
+	{
+		
+		//Store the "addExpenses()" returned value in the variable "totalExpenses".
+		var totalExpenses = addExpenses();
+		
+		//Store the "showExpensesDiv" div elemental ID in the "showTotalDiv" variable so the "showExpensesDiv" div can be displayed to the user if/when the "CalculateExpenses" button is pressed.
+		var showTotalDiv = document.getElementById("showTotalExpensesDiv");
+		
+		//Store the "totalExpenses" input text box's elemental ID in the "showTotal" variable to display the calculated expenses returned value from the "addExpenses()" function.
+		var showTotal = document.getElementById("totalExpenses");
+		
+		//Store the "calculateExpenses" button's elemental ID in the "calcBtn"  to check if/when the "calculateExpenses" button is pressed so the "showTotal" text input's value is updated with the "totalExpenses" variable value.
+		var calculateBtn = document.getElementById("calculateExpenses");
+		
+		//Check if/when the "calculateBtn" has been pressed and if so then display the "showTotalDiv" div to the system user and update the value of the "showTotal" input text box with the "totalExpenses" variable's value.
+		if (calculateBtn.value == "Calculate Expenses")
+		{
+		
+			//Style the "showTotalDiv"div to "block" from "none" to be displayed to the system user.
+			showTotalDiv.style.display = "block";
+			
+			//Update the value of the "showTotal" input text box with the "totalExpenses" variable's value within the "showTotalDiv" div.
+			showTotal.value = totalExpenses;
+		}
+		return "done";
+	}
+</script>
+<!--
+CSS contents in the below "style" tags.
+-->
+<style>
+
+	/*
+	Use of width with automatic margining to position the "addCustomerDiv" which contains the form for the customer details to be inputted by the system user.
+	*/
+	#addCustomerDiv
+	{
+		width: 33%;
+		margin: auto;
+	}
+	
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/	
+	#div1
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#addCustomerNav
+	{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+	
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#addCustomerNav a
+	{
+		text-decoration: none;
+	}
+	
+	/*
+	Display for the nav-bar contents to be displayed inline beside each of the list elements of the ordered list.
+	*/		
+	#addCustomerNav li
+	{
+		display: inline-block;
+	}
+</style>

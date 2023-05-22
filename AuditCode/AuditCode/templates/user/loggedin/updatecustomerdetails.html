@@ -1,0 +1,657 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file will allow the system user to edit the pre-filled customer account details and submit the details to be updated on the "updatecust()" function of the "audithome.py" file.
+-->
+<!--Declaration of "/templates/user/loggedin/addcustomer.html" file-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/user/loggedin/addcustomer.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			User - Update Customer Account 
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/user/loggedin/addcustomer.html" file.-->
+	<body>
+		<nav id="updateNav">
+			<h1>
+				<a href="/user/loggedin/home">
+					User - Audit Log Service API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/user/logout">
+						Logout
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag to display a welcome message to the system user with the system users username which is displayed in Jinja2 from the data provided in the "audithome.py" file.-->
+		<div id="div1">
+			<h2>
+				Welcome to the User - Audit Log Service API Update Customer Accounts Page!
+			</h2>
+			<em>
+				Logged in as {{ _userUsername }}.
+			</em>
+				<br>
+				<br>
+			To update a customer account, edit the details below and submit the form when finished by pressing the "Update Customer" button.
+				<br>
+				<br>
+		</div>
+		<!--Provide the pre-filled customer data to the corresponding labeled inputs in the form below to allow the system user to edit the details and submit the form data to be processed in the "updatecustform" function of the "audithome.py" file.-->
+		<div id="sideDiv">
+			<form method="POST" action="/user/loggedin/home?f=updateAccountForm">
+				<h4>
+					<u>
+						Update Customer
+					</u>
+				</h4>
+				<h5>
+					<i>
+						<u>
+							Section 1 - Customer Details(To be filled)
+						</u>
+					</i>
+				</h5>
+				<input type="hidden" id="customerIDDetails" name="customerIDDetails" value="{{ _customerDict[0] }}" required="True">
+				<label>
+					First Name
+				</label>
+					<br>
+				<input type="text" id="customerFirstName" name="customerFirstName" value="{{ _customerDict[2] }}" required="True">
+					<br>
+					<br>
+				<label>
+					Last Name
+				</label>
+					<br>
+				<input type="text" id="customerLastName" name="customerLastName" value="{{ _customerDict[3] }}" required="True">
+					<br>
+					<br>
+				<label>
+					Date of Birth
+				</label>
+					<br>
+				<input type="date" id="customerDateOfBirth" name="customerDateOfBirth" value="{{ _customerDict[4] }}" required="True">
+					<br>
+					<br>
+				<label>
+					Residential Address
+				</label>
+					<br>
+				<input type="text" id="customerResidentialAddress" name="customerResidentialAddress" value="{{ _customerDict[5] }}" required="True">
+					<br>
+					<br>
+				<label>
+					Date of Move In
+				</label>
+					<br>
+				<input type="date" id="customerDateOfMoveIn" name="customerDateOfMoveIn" value="{{ _customerDict[6] }}"required="True">
+					<br>
+					<br>
+				<label>
+					Phone Number
+				</label>
+					<br>
+				<input type="text" id="customerPhoneNumber" name="customerPhoneNumber" value="{{ _customerDict[7] }}" required="True">
+					<br>
+					<br>
+				<label>
+					Email Address
+				</label>
+					<br>
+				<input type="text" id="customerEmailAddress" name="customerEmailAddress" value="{{ _customerDict[8] }}" required="True">
+					<br>
+					<br>	
+				<h5>
+					<i>
+						<u>
+							Section 2 - Employment Details
+						</u>
+					</i>
+				</h5>
+				<select onclick="showDivEmploymentStatus()" name="customerEmploymentStatus" id="customerEmploymentStatus">
+					{% if _customerDict[9] == 'Employed' %}
+						<option selected="selected" id="epm" value="Employed">
+							Employed
+						</option>
+						<option value="Self Employed">
+							Self Employed
+						</option>
+						<option value="Government Benefits">
+							Government Benefits
+						</option>
+					{% elif _customerDict[9] == 'Self Employed' %}
+						<option id="epm" value="Employed">
+							Employed
+						</option>
+						<option selected="selected" value="Self Employed">
+							Self Employed
+						</option>
+						<option value="Government Benefits">
+							Government Benefits
+						</option>
+					{% elif _customerDict[9] == 'Government Benefits' %}
+						<option id="epm" value="Employed">
+							Employed
+						</option>
+						<option value="Self Employed">
+							Self Employed
+						</option>
+						<option selected="selected" value="Government Benefits">
+							Government Benefits
+						</option>
+					{% endif %}
+				</select>
+					<br>
+					<br>
+				<div id="EmployedDiv" style="display:block;">
+					<label>
+						Date Employment Commenced
+					</label>
+						<br>
+					<input type="date" id="customerDateEmploymentCommenced" name="customerDateEmploymentCommenced" value="{{ _customerDict[10] }}">
+						<br>
+						<br>
+					<label>
+						Employer Name
+					</label>
+						<br>
+					<input type="text" id="customerEmployerName" name="customerEmployerName" value="{{ _customerDict[11] }}">
+						<br>
+						<br>
+					<label>
+						Employer Address
+					</label>
+						<br>
+					<input type="text" id="customerEmployerAddress" name="customerEmployerAddress" value="{{ _customerDict[12] }}">
+						<br>
+						<br>
+					<label>
+						Employer Contact Number
+					</label>
+						<br>
+					<input type="text" id="customerEmployerContactNumber" name="customerEmployerContactNumber" value="{{ _customerDict[13] }}">
+				</div>
+					<div id="SelfEmployedDiv" style="display:block;">
+						<label>
+							Length of Time as Self Employed
+						</label>
+							<br>
+						<input type="text" id="customerLengthOfTimeAsSelfEmployed" name="customerLengthOfTimeAsSelfEmployed" value="{{ _customerDict[14] }}">
+							<br>
+							<br>
+						<label>
+							Company Name
+						</label>
+							<br>
+						<input type="text" id="customerCompanyName" name="customerCompanyName" value="{{ _customerDict[15] }}" >
+							<br>
+							<br>
+						<label>
+							Company Address
+						</label>
+							<br>
+						<input type="text" id="customerCompanyAddress" name="customerCompanyAddress" value="{{ _customerDict[16] }}">
+					</div>
+					<div id="GovernmentBenefitsDiv" style="display:block;">
+						<label>
+							Description
+						<label>
+							<br>
+						<input type="text" id="customerGovernmentBenefitsDescription" name="customerGovernmentBenefitsDescription" value="{{ _customerDict[17] }}">
+					</div>
+					<br>
+					<h5>
+						<u>
+							<i>
+								Section 3 - Income
+							</i>
+						</u>
+					</h5>
+				<label>
+					Gross Monthly Income
+				</label>
+					<br>
+				<input type="number" step="0.01" id="customerGrossMonthlyIncome" name="customerGrossMonthlyIncome" value="{{ _customerDict[18] }}" required="True">
+					<br>
+					<br>
+				<label>
+					Yearly Income after Tax
+				</label>
+					<br>
+				<input type="number" step="0.01" id="customerYearlyIncomeAfterTax" name="customerYearlyIncomeAfterTax" value="{{ _customerDict[19] }}" required="True">
+					<br>
+					<br>
+						<h5>
+							<u>
+								<i>
+									Section 4 - Types of Weekly Expenses and Costs
+								</i>
+							</u>
+						</h5>
+						<small>
+							Note: Press "Calculate Expenses" button to calculate and save the total amount of expenses.
+						</small>
+					<br>
+					<br>
+				<label>
+					Motor Costs Description
+				</label>
+					<br>
+				<input type="text" id="customerMotorCostsDescription" name="customerMotorCostsDescription" value="{{ _customerDict[20] }}">
+					<br>
+					<br>
+				<label>
+					Motor Costs Amount
+				</label>
+					<br>
+				<input type="number"  step="0.01" id="customerMotorCostsAmount" name="customerMotorCostsAmount"  value="{{ _customerDict[21] }}">
+					<br>
+					<br>
+				<label>
+					Food Expenses Description
+				</label>
+					<br>
+				<input type="text" id="customerFoodExpensesDescription" name="customerFoodExpensesDescription" value="{{ _customerDict[22] }}">
+					<br>
+					<br>
+				<label>
+					Food Expenses Amount
+				</label>
+					<br>
+				<input type="number"  step="0.01" id="customerFoodExpensesAmount" name="customerFoodExpensesAmount" value="{{ _customerDict[23] }}">
+					<br>
+					<br>
+				<label >
+					Clothing Expenses Description
+				</label>
+					<br>
+				<input type="text" id="customerClothingExpensesDescription" name="customerClothingExpensesDescription" value="{{ _customerDict[24] }}">
+					<br>
+					<br>
+				<label>
+					Clothing Expenses Amount
+				</label>
+				<br>
+				<input type="number"  step="0.01" id="customerClothingExpensesAmount" name="customerClothingExpensesAmount" value="{{ _customerDict[25] }}">
+					<br>
+					<br>
+				<label>
+					Childcare Costs Description
+				</label>
+					<br>
+				<input type="text" id="customerChildcareCostsDescription" name="customerChildcareCostsDescription" value="{{ _customerDict[26] }}">
+					<br>
+					<br>
+				<label>
+					Childcare Costs Amount
+				</label>
+					<br>
+				<input type="number"  step="0.01" id="customerChildcareCostsAmount" name="customerChildcareCostsAmount" value="{{ _customerDict[27] }}" >
+					<br>
+					<br>
+				<label>
+					Housing Expenses Description
+				</label>
+					<br>
+				<input type="text" id="customerHousingExpensesDescription" name="customerHousingExpensesDescription" value="{{ _customerDict[28] }}" >
+					<br>
+					<br>
+				<label>
+					Housing Expenses Amount
+				</label>
+					<br>
+				<input type="number"  step="0.01" id="customerHousingExpensesAmount" name="customerHousingExpensesAmount" value="{{ _customerDict[29] }}">
+					<br>
+					<br>
+				<label>
+					Home Rental Costs Description
+				</label>
+					<br>
+				<input type="text" id="customerHomeRentalCostsDescription" name="customerHomeRentalCostsDescription" value="{{ _customerDict[30] }}">
+					<br>
+					<br>
+				<label>
+					Home Rental Costs Amount
+				</label>
+					<br>
+				<input type="number"  step="0.01" id="customerHomeRentalCostsAmount" name="customerHomeRentalCostsAmount" value="{{ _customerDict[31] }}" >
+					<br>
+					<br>
+				<label>
+					Mortgage Repayments Description
+				</label>
+					<br>
+				<input type="text" id="customerMortgageRepaymentsDescription" name="customerMortgageRepaymentsDescription" value="{{ _customerDict[32] }}">
+					<br>
+					<br>
+				<label>
+					Mortgage Repayments Amount
+				</label>
+					<br>
+				<input type="number"  step="0.01" id="customerMortgageRepaymentsAmount" name="customerMortgageRepaymentsAmount" value="{{ _customerDict[33] }}">
+					<br>
+					<br>
+				<label>
+					Utility Costs Description
+				</label>
+					<br>
+				<input type="text" id="customerUtilityCostsDescription" name="customerUtilityCostsDescription" value="{{ _customerDict[34] }}">
+					<br>
+					<br>
+				<label>
+					Utility Costs Amount
+				</label>
+					<br>
+				<input type="number"  step="0.01" id="customerUtilityCostsAmount" name="customerUtilityCostsAmount" value="{{ _customerDict[35] }}">
+					<br>
+					<br>
+				<label>
+					Phone Expenses Description
+				</label>
+					<br>
+				<input type="text" id="customerPhoneExpensesDescription" name="customerPhoneExpensesDescription" value="{{ _customerDict[36] }}">
+					<br>
+					<br>
+				<label>
+					Phone Expenses Amount
+				</label>
+					<br>
+				<input type="number"  step="0.01" id="customerPhoneExpensesAmount" name="customerPhoneExpensesAmount" value="{{ _customerDict[37] }}">
+					<br>
+					<br>
+				<label>
+					Other Expenses Description
+				</label>
+					<br>
+				<input type="text" id="customerOtherExpensesDescription" name="customerOtherExpensesDescription" value="{{ _customerDict[38] }}">
+					<br>
+					<br>
+				<label>
+					Other Expenses Amount
+				</label>
+					<br>
+				<input type="number"  step="0.01" id="customerOtherExpensesAmount" name="customerOtherExpensesAmount" value="{{ _customerDict[39] }}">
+					<br>
+					<br>
+				<input type="button" id="calculateExpenses" name="calculateExpenses" onclick="showTotalExpenses()" value="Calculate Expenses">
+					<br>
+					<br>
+				<div id="showTotalExpensesDiv" style="display:block;">
+					<label>
+						Total Expenses
+					</label>
+						<br>
+					<input type="text" name="customerTotalExpensesAmount" id="customerTotalExpensesAmount" value="{{ _customerDict[40] }}">
+				</div>
+					<br>
+				<h5>
+					<i>
+						<u>
+							Section 5 - Customer Account Details
+						</u>
+					</i>
+				</h5>
+				<label>
+					Username
+				</label>
+					<br>
+				<input type="text" id="customerAccountUsername" name="customerAccountUsername" value="{{ _customerDict[41] }}">
+					<br>
+					<br>
+				<label>
+					Password
+				</label>
+					<br>
+				<input type="text" id="customerAccountPassword" name="customerAccountPassword" value="{{ _customerDict[42] }}">
+					<br>
+					<br>
+					<br>
+				<button name="updateCustomerBtn" type="submit">
+					Update Customer
+				</button>
+					<br>
+					<br>
+			</form>		
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	window.onload = function()
+	{
+		//Get the div with the ID "EmployedDiv" stored in the "EmployedDiv" variable.
+		var employedDiv = document.getElementById("EmployedDiv");
+
+		//Get the div with the ID "SelfEmployedDiv" stored in the "SelfEmployedDiv" variable.
+		var selfEmployedDiv = document.getElementById("SelfEmployedDiv");
+		
+		//Get the div with the ID "GovernmentBenefitsDiv" stored in the "governmentBenefitsDiv" variable.		
+		var governmentBenefitsDiv = document.getElementById("GovernmentBenefitsDiv");
+
+		if (document.getElementById("customerEmploymentStatus").value == "Employed")
+		{
+				
+				//Set the style of the "employedDiv" variables display to "block" to be displayed to the system user.
+				employedDiv.style.display = "block";
+				
+				//Set the style of the "selfEmployedDiv" variables display to "none" to not be displayed to the system user.
+				selfEmployedDiv.style.display = "none";
+				
+				//Set the style of the "employedDiv" variables display to "none" to not be displayed to the system user.
+				governmentBenefitsDiv.style.display = "none";
+
+		}	
+		else if (document.getElementById("customerEmploymentStatus").value == "Self Employed")
+		{
+				
+				//Set the style of the "employedDiv" variables display to "block" to be displayed to the system user.
+				employedDiv.style.display = "none";
+				
+				//Set the style of the "selfEmployedDiv" variables display to "none" to not be displayed to the system user.
+				selfEmployedDiv.style.display = "block";
+				
+				//Set the style of the "employedDiv" variables display to "none" to not be displayed to the system user.
+				governmentBenefitsDiv.style.display = "none";
+		}
+		
+		else if (document.getElementById("customerEmploymentStatus").value == "Government Benefits")
+		{
+				
+				//Set the style of the "employedDiv" variables display to "block" to be displayed to the system user.
+				employedDiv.style.display = "none";
+				
+				//Set the style of the "selfEmployedDiv" variables display to "none" to not be displayed to the system user.
+				selfEmployedDiv.style.display = "none";
+				
+				//Set the style of the "employedDiv" variables display to "none" to not be displayed to the system user.
+				governmentBenefitsDiv.style.display = "block";
+		}
+	}
+	//Show/hide the divs for employment details with the "showDivEmploymentStatus()" function. Collect the elemental ID's useed and change the display when another option of the employment status's have been changed.
+	function showDivEmploymentStatus()
+	{
+	
+		//Initialise variables to use in "showDivEmploymentStatus()" function, storing the div ID's as variables  and enabling the div's to be displayed using "block" or "none" styles to the system user upon the value of the "customerEmploymentStatus" selecft option being changed.
+		
+		//Get the select option with ID "customerEmploymentStatus" and store in the employmentStatus variable.
+		var employmentStatus = document.getElementById("customerEmploymentStatus");
+		
+		//Get the div with the ID "EmployedDiv" stored in the "EmployedDiv" variable.
+		var employedDiv = document.getElementById("EmployedDiv");
+
+		//Get the div with the ID "SelfEmployedDiv" stored in the "SelfEmployedDiv" variable.
+		var selfEmployedDiv = document.getElementById("SelfEmployedDiv");
+		
+		//Get the div with the ID "GovernmentBenefitsDiv" stored in the "governmentBenefitsDiv" variable.		
+		var governmentBenefitsDiv = document.getElementById("GovernmentBenefitsDiv");
+		
+		//Check if the "employmentStatus" variables value is "Employed" and if is then display the "EmployedDiv" div and do not show the "SelfEmployedDiv" div or the "governmentBenefitsDiv" div.
+		if (employmentStatus.value == "Employed")
+		{
+		
+			//Set the style of the "employedDiv" variables display to "block" to be displayed to the system user.
+			employedDiv.style.display = "block";
+			
+			//Set the style of the "selfEmployedDiv" variables display to "none" to not be displayed to the system user.
+			selfEmployedDiv.style.display = "none";
+			
+			//Set the style of the "employedDiv" variables display to "none" to not be displayed to the system user.
+			governmentBenefitsDiv.style.display = "none";
+		}
+		
+		//Check if the "employmentStatus" variables value is "Self Employed" and if is then display the "selfEmployedDiv" div and do not show the "employedDiv" div or the "governmentBenefitsDiv" div.
+		else if (employmentStatus.value == "Self Employed")
+		{
+		
+			//Set the style of the "employedDiv" variables display to "none" to not be displayed to the system user.
+			employedDiv.style.display = "none";
+			
+			//Set the style of the "selfEmployedDiv" variables display to "block" to be displayed to the system user.
+			selfEmployedDiv.style.display = "block";
+			
+			//Set the style of the "governmentBenefitsDiv" variables display to "none" to not be displayed to the system user.
+			governmentBenefitsDiv.style.display = "none";
+		}
+		
+		//Check if the "employmentStatus" variables value is "Government Benefits" and if is then display the "employedDiv" div and do not show the "employedDiv" div or the "governmentBenefitsDiv" div.
+		else if (employmentStatus.value = "Government Benefits")
+		{
+		
+			//Set the style of the "employedDiv" variables display to "none" to not be displayed to the system user.
+			employedDiv.style.display = "none";
+			
+			//Set the style of the "selfEmployedDiv" variables display to "none" to not be displayed to the system user.
+			selfEmployedDiv.style.display = "none";
+			
+			//Set the style of the "governmentBenefitsDiv" variables display to "block" to be displayed to the system user.
+			governmentBenefitsDiv.style.display = "block";
+		}
+	}
+
+	//The "addExpenses()" function stores the customer expenses that have been inputted by the system user as a floated numberical variable, adds all of those variables together and returns the total sum to be used in the "showTotalExpenses" function.
+	function addExpenses()
+	{
+	
+		//Initialises the expenses amounts from the inputs in the above form as variables for the expenses total to be parsed as a float.
+		
+		//Get and store the value for the "customerMotorCostsAmount" variable from the "customerMotorCostsAmount" inputs elemented ID.
+		var customerMotorCostsAmount = parseFloat(document.getElementById("customerMotorCostsAmount").value);		
+		
+		//Get and store the value for the "customerFoodExpensesAmount" variable from the "customerFoodExpensesAmount" inputs elemented ID.		
+		var customerFoodExpensesAmount = parseFloat(document.getElementById("customerFoodExpensesAmount").value);
+		
+		//Get and store the value for the "customerClothingExpensesAmount" variable from the "customerClothingExpensesAmount" inputs elemented ID.		
+		var customerClothingExpensesAmount = parseFloat(document.getElementById("customerClothingExpensesAmount").value);
+
+		//Get and store the value for the "customerChildcareCostsAmount" variable from the "customerChildcareCostsAmount" inputs elemented ID.		
+		var customerChildcareCostsAmount = parseFloat(document.getElementById("customerChildcareCostsAmount").value);
+		
+		//Get and store the value for the "customerHousingExpensesAmount" variable from the "customerHousingExpensesAmount" inputs elemented ID.		
+		var customerHousingExpensesAmount = parseFloat(document.getElementById("customerHousingExpensesAmount").value);
+		
+		//Get and store the value for the "customerHomeRentalCostsAmount" variable from the "customerHomeRentalCostsAmount" inputs elemented ID.		
+		var customerHomeRentalCostsAmount = parseFloat(document.getElementById("customerHomeRentalCostsAmount").value);
+
+		//Get and store the value for the "customerMortgageRepaymentsAmount" variable from the "customerMortgageRepaymentsAmount" inputs elemented ID.		
+		var customerMortgageRepaymentsAmount = parseFloat(document.getElementById("customerMortgageRepaymentsAmount").value);
+		
+		//Get and store the value for the "customerUtilityCostsAmount" variable from the "customerUtilityCostsAmount" inputs elemented ID.		
+		var customerUtilityCostsAmount = parseFloat(document.getElementById("customerUtilityCostsAmount").value);
+		
+		//Get and store the value for the "customerPhoneExpensesAmount" variable from the "customerPhoneExpensesAmount" inputs elemented ID.		
+		var customerPhoneExpensesAmount = parseFloat(document.getElementById("customerPhoneExpensesAmount").value);
+
+		//Get and store the value for the "customerOtherExpensesAmount" variable from the "customerOtherExpensesAmount" inputs elemented ID.		
+		var customerOtherExpensesAmount = parseFloat(document.getElementById("customerOtherExpensesAmount").value);
+		
+		//Store in the "totalExpenses" the sum of the expenses of all the variabls which store the expenses.
+		var totalExpenses = customerMotorCostsAmount + customerFoodExpensesAmount + customerClothingExpensesAmount + customerChildcareCostsAmount + customerHousingExpensesAmount + customerHomeRentalCostsAmount + customerMortgageRepaymentsAmount + customerUtilityCostsAmount + customerPhoneExpensesAmount + customerOtherExpensesAmount;
+		console.log(totalExpenses);
+		//Return the "totalExpenses" variable to be displayed to the input element with the "totalExpenses" ID.
+		return totalExpenses;
+		
+	}
+	
+	//The "showTotalExpenses()" function displays the "showExpensesDiv" div when the "calcExpenses" button is pressed.and changes the value of the input element with the ID "totalExpenses" to the return value from the "addExpenses()" function. 
+	function showTotalExpenses()
+	{
+		
+		//Store the "addExpenses()" returned value in the variable "totalExpenses".
+		var totalExpenses = addExpenses();
+		
+		//Store the "showTotalExpensesDiv" div elemental ID in the "showTotalDiv" variable so the "showTotalExpensesDiv" div can be displayed to the user if/when the "CalculateExpenses" button is pressed.
+		var showTotalDiv = document.getElementById("showTotalExpensesDiv");
+		
+		//Store the "customerTotalExpensesAmount" input text box's elemental ID in the "showTotal" variable to display the calculated expenses returned value from the "addExpenses()" function.
+		var showTotal = document.getElementById("customerTotalExpensesAmount");
+		
+		//Store the "calculateExpenses" button's elemental ID in the "calcBtn"  to check if/when the "calculateExpenses" button is pressed so the "showTotal" text input's value is updated with the "totalExpenses" variable value.
+		var calculateBtn = document.getElementById("calculateExpenses");
+		
+		//Check if/when the "calculateBtn" has been pressed and if so then display the "showTotalDiv" div to the system user and update the value of the "showTotal" input text box with the "totalExpenses" variable's value.
+		if (calculateBtn.value == "Calculate Expenses")
+		{
+		
+			//Style the "showTotalDiv"div to "block" from "none" to be displayed to the system user.
+			showTotalDiv.style.display = "block";
+			
+			//Update the value of the "showTotal" input text box with the "totalExpenses" variable's value within the "showTotalDiv" div.
+			showTotal.value = totalExpenses;
+		}
+		return "done";
+	}
+</script>
+<!--
+CSS contents in the below "style" tags.
+-->
+<style>
+
+	/*
+	Use of width with automatic margining to position the "sideDiv" which contains the form for the customer details to be updated by the system user.
+	*/
+	#sideDiv
+	{
+		width: 33%;
+		margin: auto;
+	}
+	
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/	
+	#div1
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#updateNav
+	{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+	
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#updateNav a
+	{
+		text-decoration: none;
+	}
+	
+	/*
+	Display for the nav-bar contents to be displayed inline beside each of the list elements of the ordered list.
+	*/		
+	#updateNav li
+	{
+		display: inline-block;
+	}
+</style>

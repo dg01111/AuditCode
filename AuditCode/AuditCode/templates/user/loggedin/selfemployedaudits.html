@@ -1,0 +1,147 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file will provide a table of customer self employed audits data for the system user to select a customers audit to view.
+-->
+<!--Declaration of "/templates/user/loggedin/selfemployedaudits.html" file-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/user/loggedin/selfemployedaudits.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			User -  View Self Employed Audits ALS API
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/user/loggedin/selfemployedaudits.html" file.-->
+	<body>
+		<!--Nav-bar enabling navigation for the login section of the user part of the web-app system. To include navigational links to the "/user/loggedin/home" route and the "/user/logout" route.-->
+		<nav id="auditsNav">
+			<h1>
+				<a href="/user/loggedin/home">
+					User - Audit Log Service API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/user/logout">
+						Logout
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag to display a welcome message to the system user with the system users username which is displayed in Jinja2 from the data provided in the "audithome.py" file.-->
+		<div id="div1">
+			<h2>
+				Welcome to the User - Audit Log Service API View Self Employed Audits Page!
+			</h2>
+			<em>
+				Logged in as {{ _userUsername }}.
+			</em>
+				<br>
+				<br>
+		</div>
+		<!--Provide a table in the "submitEmployedAudits" form to allow the system user to view all the employed customer audit details so an audited customer can be selected and the audit details provided for tha selected customers audit on the "/templates/user/loggedin/viewemployedaudits.html"-->
+		<div id="sideDiv">
+				<table>
+					<thead>
+						<th>
+							Customer ID
+						</th>
+						<th>
+							Customer First Name
+						</th>
+						<th>
+							Customer Last Name
+						</th>
+						<th>
+							Audit ID
+						</th>
+						<th>
+							Paid
+						</th>
+						<th>
+							View Audit
+						</th>
+					</thead>
+					<tbody>
+						{% for info in _selfEmployedAudits %}
+							<tr>
+								<td>
+									{{ info[3] }}
+								</td>
+								<td>
+									{{ info[1] }}
+								</td>
+								<td>
+									{{ info[2] }}
+								</td>
+								<td>
+									{{ info[0] }}
+								</td>
+								<td>
+									{{ info[4] }}
+								</td>
+								<td>
+								<form action="/user/loggedin/viewselfemployedaudits?f=selfEmployedAudits" method="POST">
+									<input type="hidden" value="{{ info[0] }}" name="customerAuditID" id="customerAuditID">
+									<button name="View Audit" type="submit">
+										View Audit
+									</button>
+								</form>
+								</td>
+							</tr>
+						{% endfor %}	
+					</tbody>
+				</table>
+		</div>
+	</body>
+</html>
+<!--
+CSS contents in the below "style" tags.
+-->
+<style>
+
+	/*
+	Use of width with automatic margining to position the "sideDiv" div which contains display of the customers self employed audits available to select and view.
+	*/
+	#sideDiv
+	{
+		width: 50%;
+		margin: auto;
+	}
+	
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/
+	#div1
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#auditsNav
+	{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+	
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#auditsNav a
+	{
+		text-decoration: none;
+	}
+	
+	/*
+	Display for the nav-bar contents to be displayed inline beside each of the list elements of the ordered list.
+	*/	
+	#auditsNav li
+	{
+		display: inline-block;
+	}
+</style>

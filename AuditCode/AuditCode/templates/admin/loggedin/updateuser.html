@@ -1,0 +1,142 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file will allow an administrative user to modify/change the selected system users details from the previous web-page "/admin/loggedin/updatesystemuser.html" and will update the "systemUserLogin" table from the "alsDB.db" database.when the "Update User" button has been pressed within the "updatesystemuser()" function within the "audithome.py" file.
+-->
+<!--Declaration of "/templates/admin/loggedin/updateuser.html" file-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/admin/loggedin/updateuser.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			Admin - Update System User ALS API
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/admin/loggedin/updateuser.html" file.-->
+	<body>
+		<!--Nav-bar enabling navigation for the login section of the admin part of the web-app system. To include navigational links to the logged in admin home web-page, with also a logout option for the administrative user.--> 
+		<nav id="updateSystemUserNav">
+			<h1>
+				<a href="/admin/loggedin/home">
+					Admin - Audit Log Service API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/admin/logout">
+						Logout
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag to display the administrative users username which is displayed with the data from the "audithome.py" file using Jinja2.-->
+		<div id="div1">
+			<h2>
+				Welcome to the Admin - Audit Log Service API Update System User Page!
+			</h2>
+			<em>
+				Logged in as {{ _adminUsername }}.	
+			</em>	
+				<br>
+				<br>
+			<small>
+				Note: To update the user details below, modify or change the details and then click the "Update User" button.
+			</small>
+		</div>
+			<br>
+			<br>
+			<br>
+		<!--"updatesystemuser" div provides input fields that have been filled with the system users details and when the "Update User" button is pressed then the system users details modified on the form below will be updated in the "systemUserLogin" table within the "alsDB.db" database.-->
+		<div id="updatesystemuser">
+			{% for user in _userDetails %}
+				<form method="POST" action="/admin/loggedin/home?f=updatesystemuser">
+					<h3>
+						<u>
+							Update System User Details
+						</u>
+					</h3>
+					<label>
+						Name
+					</label>
+						<br>
+					<input type="text" name="sysUsersName" value="{{ user[2] }}" required="True">
+						<br>
+						<br>
+					<label>
+						Username
+					</label>
+						<br>
+					<input type="text" name="sysUsersUsername" value="{{ user[3] }}" required="True">
+						<br>
+						<br>
+					<label>
+						Password
+					</label>
+						<br>
+					<input type="text" name="sysUsersPassword" value="{{ user[4] }}" required="True">
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+					<input type="hidden" name="sysUserID" value="{{ user[0] }}" required="True">
+					<button name="submitBtn" type="submit">
+						Update User
+					</button>
+						<br>
+						<br>
+						<br>
+				</form>
+			{% endfor %}
+		</div>
+	</body>
+</html>
+<!--
+CSS contents in the below "style" tags.
+-->
+<style>
+
+	/*
+	Use of width with automatic margining to position the "updatesystemuser" div which contains the form with system user data to be updated.
+	*/
+	#updatesystemuser
+	{
+		width: 33%;
+		margin: auto;
+	}
+
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/	
+	#div1
+	{
+		width: 88%;
+		margin: auto;
+	}
+
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#updateSystemUserNav
+	{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#updateSystemUserNav a
+	{
+		text-decoration: none;
+	}
+
+	/*
+	Display for the nav-bar contents to be displayed inline beside each of the list elements of the ordered list.
+	*/	
+	#updateSystemUserNav li
+	{
+		display: inline-block;
+	}
+	</style>

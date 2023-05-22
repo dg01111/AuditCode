@@ -1,0 +1,118 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file will allow a system user to log in to the ALS API with the credentials provided by an adminsitrative user. 
+-->
+<!--Declaration of "/templates/user/login.html" file-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/user/login.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			User - Login ALS API
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/user/login.html" file.-->
+	<body>
+		<!--Nav-bar enabling navigation for the login section of the user part of the web-app system. To include navigational links to the "/user/login" route.-->
+		<nav id="userLoginNav">
+			<h1>
+				<a href="/user/login">
+					User - Audit Log Service API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/user/login">
+						Login
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag to display a welcome message to the system user with a "_loginFailMsg" displayed if the wrong user credentials have been entered.-->
+		<div id="div1">
+			<h2>
+				Welcome to the User - Audit Log Service API Login Page!
+			</h2>
+			<small>
+				{{ _loginFailMsg }}
+				{{ _loggedOutMsg }}
+			</small>
+		</div>
+			<br>
+			<br>
+			<br>
+		<!--"userLoginDiv" provides the user with a form to allow the system user to input their system user credentials on the form below to be able to access the "/user/loggedin/home" route of the web-app system. Credentials are stored in the "systemUserLogin" table within the "alsDB.db" database.--> 
+		<div id="userLoginDiv">
+			<form method="POST" action="/user/loggedin/home?f=loginForm">
+				<h3>
+					<u>
+						User Login
+					</u>
+				</h3>
+				<label>
+					Username
+				</label>
+					<br>
+				<input type="text" name="userUsername" required="True">
+					<br>
+					<br>
+				<label>
+					Password
+				</label>
+					<br>
+				<input type="password" name="userPassword" required="True">
+					<br>
+					<br>
+					<br>
+				<button name="userLoginBtn" type="submit">
+					Login
+				</button>
+			</form>
+		</div>
+	</body>
+</html>
+<!--
+CSS contents in the below "style" tags.
+-->
+<style>
+
+	/*
+	Use of width with automatic margining to position the "userLoginDiv" div which contains the login form for the system user.
+	*/
+	#userLoginDiv{
+		width: 33%;
+		margin: auto;
+	}
+	
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/
+	#div1{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#userLoginNav{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+	
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#userLoginNav a{
+		text-decoration: none;
+	}
+	
+	/*
+	Display for the nav-bar contents to be displayed inline beside each of the list elements of the ordered list.
+	*/	
+	#userLoginNav li{
+		display: inline;-block
+	}
+	</style>

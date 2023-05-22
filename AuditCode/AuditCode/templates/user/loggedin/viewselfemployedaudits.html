@@ -1,0 +1,184 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file provides the system user with the audit chosen from the "/templates/user/loggedin/selfemployedaudits.html"and displayed to the system user within a table.
+-->
+<!--Declaration of "/templates/user/loggedin/viewselfemployedaudits.html" file-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/user/loggedin/viewselfemployedaudits.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			User - View Self Employed Audits ALS API
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/user/loggedin/viewselfemployedaudits.html" file.-->
+	<body>
+		<nav id="auditsNav">
+			<h1>
+				<a href="/user/loggedin/home">
+					User - ALS API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/user/logout">
+						Logout
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag to display a welcome message to the system user with the system users username which is displayed in Jinja2 from the data provided in the "audithome.py" file.-->
+		<div id="div1">
+			<h2>
+				Welcome to the User - Audit Log Service API View Customer Audit Page!
+			</h2>
+			<em>
+				Logged in as {{ _userUsername }}.
+			</em>
+				<br>
+				<br>
+				<br>
+		</div>
+		<!--Display the data from each of the audits that have been sent to customers and retrieved from the "selfEmployedCustomerAudits" table from the "alsDB.db" database.-->
+		<div id="sideDiv">
+			<table>
+				{% for each in _selfEmployedAudit %}
+					<thead>
+						<th>
+							Customer Account ID
+						</th>
+						<th>
+							First Name
+						</th>
+						<th>
+							Last Name
+						</th>
+						<th>
+							Length of Time as Self Employed
+						</th>
+						<th>
+							Company Name
+						</th>
+						<th>
+							Company Address
+						</th>
+						<th>
+							Gross Monthy Income
+						</th>
+						<th>
+							{{ each[5] }}
+						</th>
+						<th>
+							Yearly Income After Tax
+						</th>
+						<th>
+							TAX RETURNS @ 4%
+						</th>
+						<th>
+							PAY BY DATE
+						</th>
+						<th>
+							PAYMENT DETAILS
+						</th>
+						<th>
+							Paid
+						</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								{{ each[2] }}
+							</td>
+							<td>
+								{{ each[3] }}
+							</td>
+							<td>
+								{{ each[4] }}
+							</td>
+							<td>
+								{{ each[6] }}
+							</td>
+							<td>
+								{{ each[7] }}
+							</td>
+							<td>
+								{{ each[8] }}
+							</td>
+							<td>
+								{{ each[9] }}
+							</td>
+							<td>
+								{{ each[10] }}
+							</td>
+							<td>
+								{{ each[11] }}
+							</td>
+							<td>
+								{{ each[12] }}
+							</td>
+							<td>
+								{{ each[13] }}
+							</td>
+							<td>
+								{{ each[14] }}
+							</td>
+							<td>
+								{{ each[15] }}
+							</td>
+						</tr>
+					</tbody>
+				{% endfor %}
+			</table>
+		</div>
+	</body>
+</html>
+<!--
+CSS contents in the below "style" tags.
+-->
+<style>
+
+	/*
+	Use of width with automatic margining to position the "sideDiv" div which contains the table of the self employed customer audit.
+	*/
+	#sideDiv
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/
+	#div1
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#auditsNav
+	{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+	
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#auditsNav a
+	{
+		text-decoration: none;
+	}
+	
+	/*
+	Display for the nav-bar contents to be displayed inline beside each of the list elements of the ordered list.
+	*/	
+	#auditsNav li
+	{
+		display: inline-block;
+	}
+</style>

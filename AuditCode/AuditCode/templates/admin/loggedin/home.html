@@ -1,0 +1,143 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file will be provided to the administrative user when administrative credentials have been correctly provided on the ."/admin/login.html" web-page. This page provides hyper-links to navigate to parts of the administrative part of the web-app system which the administrative user can provide system users with credentials to accrss the system user part of the web-app system, to delete those system user credentials, update those system user credentials, view system user credentials and also provides the administrative user access to informative message logs that have been provided throughout the system upon the various actions performed on the web-app system. 
+-->
+<!--Declaration of "/templates/admin/home.html" file-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/admin/home.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			Admin - Home ALS API
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/admin/loggedin/home.html" file.--> 	
+	<body>
+		<!--Nav-bar enabling navigation for the login section of the admin part of the web-app system. To include navigational links to the logged in admin home web-page, with also a logout option for the administrative user.--> 
+		<nav id="adminHomeNav">
+			<h1>
+				<a href="/admin/loggedin/home">
+					Admin - Audit Log Service API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/admin/logout">
+						Logout
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag, with a message to inform the administrative user that a new system user was added to the system which is the "_newSystemUserMsg" provided from the "audithome.py" file located within "adminhome()" function, a message to inform the administrative user that a system user details had been updated, displayed using Jinja2.-->
+		<div id="div1">
+			<h2>
+				Welcome to the Admin - Audit Log Service API Home Page!
+			</h2>
+			<em>
+				Logged in as {{ _adminUsername }}.
+			</em>
+				<br>
+				<br>
+			<small>
+				{{ _newSystemUserMsg }}
+				{{ _updatedSystemUserMsg }}
+			</small>
+		</div>
+			<br>
+			<br>
+			<br>
+		<!--"sideDiv" to include navigational hyper-links around the web-app system to view the informative logs of the web-app system, to view the system users, to add new system users, to update system user details and to delete sysem user details.-->
+		<div id="sideDiv">
+			<h3>
+				<u>
+					Logs
+				</u>
+			</h3>
+			<ol>
+				<li>
+					<a href="/admin/loggedin/viewlogs">
+						View Logs
+					</a>
+				</li>
+			</ol>
+			<h3>
+				<u>
+					System Users
+				<u>
+			</h3>
+			<ol>
+				<li>
+					<a href="/admin/loggedin/viewsystemusers">
+						View System Users
+					</a>
+				</li>
+				<li>
+					<a href="/admin/loggedin/addsystemuser">
+						Add System User
+					</a>
+				</li>
+				<li>
+					<a href="/admin/loggedin/updatesystemuser">
+						Update System User Details
+					</a>
+				</li>					
+				<li>
+					<a href="/admin/loggedin/deletesystemuser">
+						Delete System User
+					</a>
+				</li>
+			</ol>
+		</div>
+	</body>
+</html>
+<!--
+CSS contents in the below "style" tags.
+-->
+<style>
+	
+	/*
+	Use of width with automatic margining to position the "sideDiv" which contains the navigation of the administrative part of the ALS API web-app system.
+	*/
+	#sideDiv
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/
+	#div1
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#adminHomeNav
+	{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+	
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#adminHomeNav a
+	{
+		text-decoration: none;
+	}
+	
+	/*
+	Display for the nav-bar contents to be displayed inline beside each of the list elements of the ordered list.
+	*/
+	#adminHomeNav li
+	{
+		display: inline-block;
+	}
+</style>
+	

@@ -1,0 +1,273 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file will provide the system user with the list of customer accounts that can be selected to send an audit to the selected customer account when the "auditCustomer" form is submitted 
+-->
+<!--Declaration of "/templates/user/loggedin/home.html" file-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/user/loggedin/createsendaudit.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			User - Create/Send Audits ALS API
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/user/loggedin/home.html" file.-->
+	<body>
+		<!--Nav-bar enabling navigation for the login section of the user part of the web-app system. To include navigational links to the "/user/loggedin/home" route and the "/user/logout" route.-->
+		<nav id="auditNav">
+			<h1>
+				<a href="/user/loggedin/home">
+					User - Audit Log Service API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/user/logout">
+						Logout
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag to display a welcome message to the system user with the system users username which is displayed in Jinja2 from the data provided in the "audithome.py" file.-->
+		<div id="div1">
+			<h2>
+				Welcome to the User - Audit Log Service API Create/Send Audits Page!
+			</h2>
+			<em>
+				Logged in as {{ _userUsername }}.
+			</em>
+				<br>
+				<br>
+			Choose a customer account to view and send an audit.
+		</div>
+		<!--Provide a search form for the system user to search the customer accounts to be displayed to the system user. The user accounts data will be displayed to the system user with an "Audit Customer" button next to each account, and will take the user to the "/templates/user/loggedin/viewaudit.html" which will enable the system user to send the selected customer the created audit when the "auditCustomer" form is submitted.-->
+		<div id="sideDiv">
+			<form action="/user/loggedin/createsendaudit?f=searchForm" method="POST">
+				<select name="searchBox" id="searchBox">
+					<option value="Search First Name">
+						Search First Name
+					</option>
+					<option value="Search Last Name">
+						Search Last Name
+					</option>
+					<option value="Search Address">
+						Search Address
+					</option>
+					<option value="Search Phone Number">
+						Search Phone Number
+					</option>
+					<option value="Search Email Address">
+						Search Email Address
+					</option>
+					<option value="Search Employment Status">
+						Search Employment Status
+					</option>
+				</select>
+				<input type="text" name="searchInput" id="searchInput">				
+				<input type="submit" name="searchbtn" id="searchbtn">
+			</form>
+			<table>
+				<thead>
+					<th>
+						Customer ID
+					</th>
+					<th>
+						Date Customer Added
+					</th>
+					<th>
+						Customer First Name
+					</th>
+					<th>
+						Customer Last Name
+					</th>
+					<th>
+						Date of Birth
+					</th>
+					<th>
+						Residential Address
+					</th>
+					<th>
+						Date of Move In
+					</th>
+					<th>
+						Phone Number
+					</th>
+					<th>
+						Email Address
+					</th>
+					<th>
+						Employment Details
+					</th>
+					<th>
+						Date Employment Commenced
+					</th>
+					<th>
+						Employer Name
+					</th>
+					<th>
+						Employer Address
+					</th>
+					<th>
+						Employer Contact Number
+					</th>
+					<th>
+						Length of Time as Self Employed
+					</th>
+					<th>
+						Company Name
+					</th>
+					<th>
+						Company Address
+					</th>
+					<th>
+						Government Benefits Description
+					</th>
+					<th>
+						Gross Monthly Income
+					</th>
+					<th>
+						Yearly Income After Tax
+					</th>
+					<th>
+						Motor Costs Description
+					</th>
+					<th>
+						Motor Costs Amount
+					</th>
+					<th>
+						Food Expenses Description
+					</th>
+					<th>
+						Food Expenses Amount
+					</th>
+					<th>
+						Clothing Expenses Description
+					</th>
+					<th>
+						Clothing Expenses Amount
+					</th>
+					<th>
+						Childcare Costs Description
+					</th>
+					<th>
+						Childcare Costs Amount
+					</th>
+					<th>
+						Housing Expenses Description
+					</th>
+					<th>
+						Housing Expenses Amount
+					</th>
+					<th>
+						Home Rental Costs Description
+					</th>
+					<th>
+						Home Rental Costs Amount
+					</th>
+					<th>
+						Mortgage Repayments Description
+					</th>
+					<th>
+						Mortgage Repayments Amount
+					</th>
+					<th>
+						Utility Costs Description
+					</th>
+					<th>
+						Utility Costs Amount
+					</th>
+					<th>
+						Phone Expenses Description
+					</th>
+					<th>
+						Phone Expenses Amount
+					</th>
+					<th>
+						Other Expenses Description
+					</th>
+					<th>
+						Other Expenses Amount 
+					</th>
+					<th>
+						Total Expenses
+					</th>
+					<th>
+						Customer Username
+					</th>
+					<th>
+						Customer Password
+					</th>
+					<th>
+						Create/Send Audit
+					</th>
+				</thead>
+				<tbody>
+					{% for account in  _customerAccountDetails %}
+						<tr>
+							{% for info in account %}
+							<td>
+								{{ info }}
+							</td>
+							{% endfor %}
+							<td>
+								<form method="POST" action="/user/loggedin/viewaudit?f=auditCustomer">
+									<input type="hidden" name="accountCustomerDetailsID" value="{{ account[0] }}">
+									<button name="auditCustomerBtn" type="submit">
+										Audit Customer
+									</button>
+								</form>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
+<style>
+
+	/*
+	Use of width with automatic margining to position the "sideDiv" div which contains the customer accounts that can be selected to view and create audits.
+	*/
+	#sideDiv
+	{
+		width: 100%;
+		margin: auto;
+	}
+	
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/
+	#div1
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#auditNav
+	{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+	
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#auditNav a
+	{
+		text-decoration: none;
+	}
+	
+	/*
+	Display for the nav-bar contents to be displayed inline beside each of the list elements of the ordered list.
+	*/	
+	#auditNav li
+	{
+		display: inline-block;
+	}
+</style>

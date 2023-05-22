@@ -1,0 +1,137 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file will allow an admin user to view all the system user credentials that have been added at the "/admin/loggedin/addsystemuser" route which will allow system users to log in to the "templates/user/login.html" web-page of the web-app system.
+-->
+<!--Declaration of "/templates/admin/loggedin/viewsystemusers.html" file-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/admin/loggedin/viewsystemusers.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			Admin - View System Users ALS API
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/admin/loggedin/viewsystemusers.html" file.-->
+	<body>
+		<!--Nav-bar enabling navigation for the login section of the admin part of the web-app system. To include navigational links to the logged in admin home web-page, with also a logout option for the administrative user.--> 
+		<nav id="adminViewSystemUsersNav">
+			<h1>
+				<a href="/admin/loggedin/home">
+					Admin - Audit Log Service API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/admin/logout">
+						Logout
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag to display the administrative users username which is displayed with the data from the "audithome.py" file using Jinja2.-->
+		<div id="div1">
+			<h2>
+				Welcome to the Admin - Audit Log Service API View System Users Page!
+			</h2>
+			<em>
+				Logged in as {{ _adminUsername }}.	
+			</em>
+		</div>
+			<br>
+			<br>
+			<br>
+		<!--"viewSystemUsersDiv" provides a table header and a table body to include the details all of the system users ID, the systems users names, the usernames and the passwords of all system users which have been added on the "/admin/loggedin/addsystemuser" route of the web-app system, and retrieved for viewing on this web-page from the "viewsystemuser()" function located within the "audithome.py" file.-->
+		<div id="viewSystemUsersDiv">
+			<h3>
+				<u>
+					System Users
+				</u>
+			</h3>
+			<table>
+				<thead>
+					<th>
+						System User ID
+					</th>
+					<th>
+						System Users Name
+					</th>
+					<th>
+						Username
+					</th>
+					<th>
+						Password
+					</th>
+				</thead>
+				<tbody>
+					{% for user in _systemUserDetails %}
+						<tr>
+							<td>
+								{{ user[0] }}
+							</td>
+							<td>
+								{{ user[2] }}
+							</td>
+							<td>
+								{{ user[3] }}
+							</td>
+							<td>
+								{{ user[4] }}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
+<!--
+CSS contents in the below "style" tags.
+-->
+<style>
+	
+	/*
+	Use of width with automatic margining to position the "viewLogsDiv" which contains the table of system users  information displayed to the administrative user.
+	*/
+	#viewSystemUsersDiv
+	{
+		width: 44%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/	
+	#div1
+	{
+		width: 84%;
+		margin: auto;
+	}
+
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#adminViewSystemUsersNav
+	{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+	
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#adminViewSystemUsersNav a
+	{
+		text-decoration: none;
+	}
+	
+	/*
+	Display for the nav-bar contents to be displayed inline beside each of the list elements of the ordered list.
+	*/	
+	#adminViewSystemUsersNav li
+	{
+		display: inline-block;
+	}
+	</style>

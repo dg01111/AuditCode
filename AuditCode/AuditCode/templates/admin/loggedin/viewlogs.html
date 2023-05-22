@@ -1,0 +1,142 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file will allow an admin user to view the logs stored in the "alsDB.db" database within the "messageLogs" table displayed within this "/admin/loggedin/viewlogs.html" file.
+-->
+<!--Declaration of "/templates/admin/loggedin/viewlogs.html" file-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/admin/loggedin/viewlogs.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			Admin - View Logs ALS API
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/admin/loggedin/viewlogs.html" file.-->
+	<body>
+		<!--Nav-bar enabling navigation for the login section of the admin part of the web-app system. To include navigational links to the logged in admin home web-page, with also a logout option for the administrative user.--> 
+		<nav id="adminLogNav">
+			<h1>
+				<a href="/admin/loggedin/home">
+					Admin - Audit Log Service API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/admin/logout">
+						Logout
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag to display the administrative users username which is displayed with the data from the "audithome.py" file using Jinja2.-->
+		<div id="div1">
+			<h2>
+				Welcome to the Admin - Audit Log Service API View Logs Page!
+			</h2>
+			<em>
+				Logged in as {{ _adminUsername }}.
+			</em>
+		</div>
+			<br>
+			<br>
+			<br>
+		<!--"viewLogsDiv" provides a table header to include details of the date the log was added to the "alsDB.db" databases "messageLogs" table, details of the log message, the log category, which user was using the web-app system, which route (location) was accessed for the log to be stored, then provides each of the log details in table rows within the table body using a Jinja2 "for loop" in which the data is taken from the "audithome.py" file within the "viewlogs()" function and stored in the Jinja2 variable "_logDetails".--> 
+		<div id="viewLogsDiv">
+			<h3>
+				<u>
+					Logs
+				</u>
+			</h3>
+			<table>
+				<thead>
+					<th>
+						Log Date
+					</th>
+					<th>
+						Log Message
+					</th>
+					<th>
+						Log Category
+					</th>
+					<th>
+						Log User
+					</th>
+					<th>
+						Log Location
+					</th>
+				</thead>
+				<tbody>
+					{% for log in _logDetails %}
+						<tr>
+							<td>
+								{{ log[0] }}
+							</td>
+							<td>
+								{{ log[1] }}
+							</td>
+							<td>
+								{{ log[2] }}
+							</td>
+							<td>
+								{{ log[3] }}
+							</td>
+							<td>
+								{{ log[4] }}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
+<!--
+CSS contents in the below "style" tags.
+-->
+<style>
+
+	/*
+	Use of width with automatic margining to position the "viewLogsDiv" which contains the table of log information displayed to the administrative user.
+	*/
+	#viewLogsDiv
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/
+	#div1
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#adminLogNav
+	{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+	
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#adminLogNav a
+	{
+		text-decoration: none;
+	}
+	
+	/*
+	Display for the nav-bar contents to be displayed inline beside each of the list elements of the ordered list.
+	*/
+	#adminLogNav li
+	{
+		display: inline-block;
+	}
+</style>

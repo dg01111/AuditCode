@@ -1,0 +1,135 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file will allow an admin user to add a new system user by supplying a system users name, a system users username and a system users password for to allow the added system user details to be added to the "alsDB.db" database at the "/admin/loggedin/addsystemuser" route of the "audithome.py" file.
+-->
+<!--Declaration of "/templates/admin/loggedin/addsystemuser.html" file-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/admin/loggedin/addsystemuser.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			Admin - Add System User ALS API
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/admin/loggedin/addsystemuser.html" file.-->
+	<body>
+		<!--Nav-bar enabling navigation for the login section of the admin part of the web-app system. To include navigational links to the logged in admin home web-page, with also a logout option for the administrative user.--> 
+		<nav id="addSystemUserNav">
+			<h1>
+				<a href="/admin/loggedin/home">
+					Admin - Audit Log Service API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/admin/logout">
+						Logout
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag to display the administrative users username which is displayed with the data from the "audithome.py" file using Jinja2.-->
+		<div id="div1">
+			<h2>
+				Welcome to the Admin - Audit Log Service API Add System User Page!
+			</h2>
+			<em>
+				Logged in as {{ _adminUsername }}.
+			</em>
+				<br>
+				<br>
+			<small>
+				Note: To add a system user, enter the correct details below and click the submit button.
+			</small>
+		</div>
+			<br>
+			<br>
+			<br>
+		<!--"addSystemUserDiv" provides a form to allow the administrative user to input new system user credentials on the form below to be added to the "alsDB.db" database within the "systemUserLogin" table..--> 
+		<div id="addSystemUserDiv">
+			<form method="POST" action="/admin/loggedin/home?f=addsystemuser">
+				<h3>
+					<u>
+						Add System User
+					</u>
+				</h3>
+				<label>
+					Name
+				</label>
+					<br>
+				<input type="text" name="sName" required="True">				
+					<br>
+					<br>
+				<label>
+					Username
+				</label>
+					<br>
+				<input type="text" name="sUsername" required="True">
+					<br>
+					<br>
+				<label>
+					Password
+				</label>
+					<br>
+				<input type="password" name="sPassword" required="True">
+					<br>
+					<br>
+					<br>
+					<br>
+				<button name="submitBtn" type="submit">
+					Add User
+				</button>
+			</form>
+		</div>
+	</body>
+</html>
+<!--
+CSS contents in the below "style" tags.
+-->
+<style>
+
+	/*
+	Use of width with automatic margining to position the "addSystemUserDiv" which contains a form to add a system user.
+	*/
+	#addSystemUserDiv
+	{
+		width: 33%;
+		margin: auto;
+	}
+	
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/	
+	#div1
+	{
+		width: 84%;
+		margin: auto;
+	}
+
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#addSystemUserNav
+	{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#addSystemUserNav a
+	{
+		text-decoration: none;
+	}
+
+	/*
+	Display for the nav-bar contents to be displayed inline beside each of the list elements of the ordered list.
+	*/	
+	#addSystemUserNav li
+	{
+		display: inline;-block
+	}
+	</style>

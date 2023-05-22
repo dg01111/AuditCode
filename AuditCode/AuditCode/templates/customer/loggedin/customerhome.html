@@ -1,0 +1,112 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file will allow a customer to access the customers audits and navigate the customer part of the web-app system.
+-->
+<!--Declaration of "/templates/customer/loggedin/customerhome.html" file.-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/customer/loggedin/customerhome.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			Customer - Home ALS API
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/customer/loggedin/customerhome.html" file.-->
+	<body>
+		<!--Nav-bar enabling navigation for the login section of the customer part of the web-app system. To include navigational links to the "/customer/loggedin/customerhome" route and the "/customer/logout" route.-->
+		<nav id="customerHomeNav">
+			<h1>
+				<a href="/customer/loggedin/customerhome">
+					Customer - Audit Log Service API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/customer/logout">
+						Logout
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag to display a welcome message to the system user with a "_loginFailMsg" displayed if the wrong user credentials have been entered.-->
+		<div id="div1">
+			<h2>
+				Welcome to the Customer - Audit Log Service API Home Page!
+			</h2>
+			<em>
+				Logged in as {{ _customerUsername }}.
+			</em>
+				<br>
+				<br>
+			<small>
+				{{ _paidAuditMsg }}
+			</small>
+		</div>
+			<br>
+			<br>
+			<br>
+		<!--Provide a link to the "/templates/customer/loggedin/viewpayaudit.html" web-page for the customer.--> 
+		<div id="sideDiv">
+			<h3>
+				Audits
+			</h3>
+			<ol>
+				<li>
+					<a href="/customer/loggedin/viewpayaudit">
+						View/Pay Audit(s)
+					</a>
+				</li>
+			</ol>
+		</div>
+	</body>
+</html>
+<!--
+CSS contents in the below "style" tags.
+-->
+<style>
+
+	/*
+	Use of width with automatic margining to position the "sideDiv" div which contains the navigation of the web-app system for the customer.
+	*/
+	#sideDiv
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/
+	#div1
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#customerHomeNav
+	{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+	
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#customerHomeNav a
+	{
+		text-decoration: none;
+	}
+	
+	/*
+	Display for the nav-bar contents to be displayed inline beside each of the list elements of the ordered list.
+	*/	
+	#customerHomeNav li
+	{
+		display: inline-block;
+	}
+</style>

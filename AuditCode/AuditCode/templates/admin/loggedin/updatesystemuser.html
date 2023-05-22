@@ -1,0 +1,150 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file will allow an admin user to view details of system users to select a user to allow that system users details to be changed/modified on the next web-page following the submission of the form when the "updateSystemUserBtn" is pressed. The data for the display of the systems users data is retrieved from the "audithome.py" file "updatesystemuser()" function and displayed using the "_userDetails" variable with Jinja2 from the "audithome.py" "updatesystemuser()" function.
+-->
+<!--Declaration of "/templates/admin/loggedin/viewlogs.html" file-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/admin/loggedin/updatesystemuser.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			Admin - Update System User ALS API
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/admin/loggedin/viewlogs.html" file.-->
+	<body>
+		<!--Nav-bar enabling navigation for the login section of the admin part of the web-app system. To include navigational links to the logged in admin home web-page, with also a logout option for the administrative user.-->
+		<nav id="adminUpdateNav">
+			<h1>
+				<a href="/admin/loggedin/home">
+					Admin - Audit Log Service API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/admin/logout">
+						Logout
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag to display the administrative users username which is displayed with the data from the "audithome.py" file using Jinja2.-->
+		<div id="div1">
+			<h3>
+				Welcome to the Admin - Audit Log Service API Update System User Page!
+			</h3>
+			<em>
+				Logged in as {{ _adminUsername }}.
+			</em>
+				<br>
+				<br>
+			<small>
+				Note: To update a system users details, select the system user to update by clicking the "UPDATE" button next to that system users details.
+			</small>
+		</div>
+			<br>
+			<br>
+			<br>
+		<!--"updatesystemuser" div provides a table to display each system users details with an "UPDATE" button beside each of the system users details and a hidden input field is given the value of each system users ID to identify the system user and fill the form on the next web-page after the "UPDATE" button has been pressed by the administrative user to go to "/admin/loggedin/updateuser" route.within the "audithome.py" file.-->
+		<div id="updatesystemuser">
+			<h3>
+				<u>
+					Update System User
+				</u>
+			</h3>
+			<table>
+				<thead>
+					<th>
+						System User ID
+					</th>
+					<th>
+						System Users Name
+					</th>
+					<th>
+						Username
+					</th>
+					<th>
+						Password
+					</th>
+					<th>
+						UPDATE
+					</th>
+				</thead>
+				<tbody>
+					{% for user in _userDetails %}
+						<tr>
+							<td>
+								{{ user[0] }}
+							</td>
+							<td>
+								{{ user[2] }}
+							</td>
+							<td>
+								{{ user[3] }}
+							</td>
+							<td>
+								{{ user[4] }}
+							</td>
+							<td>
+							<form method="POST" action="/admin/loggedin/updateuser?f=updatesystemuser">
+								<input type="hidden" value="{{ user[0] }}" name="sysUserID">
+								<button name="updateSystemUserBtn" type="submit">
+									UPDATE
+								</button>
+							</form>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
+
+<style>
+
+	/*
+	Use of width with automatic margining to position the "updatesystemuser" div which contains the table of system user credentials displayed to the administrative user.
+	*/
+	#updatesystemuser
+	{
+		width: 50%;
+		margin: auto;
+	}
+	
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/
+	#div1
+	{
+		width: 84%;
+		margin: auto;
+	}
+
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#adminUpdateNav
+	{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+	
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#adminUpdateNav a
+	{
+		text-decoration: none;
+	}
+	
+	/*
+	Display for the nav-bar contents to be displayed inline beside each of the list elements of the ordered list.
+	*/
+	#adminUpdateNav li
+	{
+		display: inline-block;
+	}
+	</style>

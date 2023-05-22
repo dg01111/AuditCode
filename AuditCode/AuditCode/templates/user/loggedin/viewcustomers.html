@@ -1,0 +1,253 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file allows the system user to view all the information of the "customerAccounts" table in the "alsDB.db" database and displayed in a table.
+-->
+<!--Declaration of "/templates/user/loggedin/viewcustomers.html" file-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/user/loggedin/addcustomer.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			User - View Customer Accounts ALS API
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/user/loggedin/addcustomer.html" file.-->
+	<body>
+		<!--Nav-bar enabling navigation for the login section of the user part of the web-app system. To include navigational links to the "/user/loggedin/home" route and the "/user/logout" route.-->
+		<nav id="userNav">
+			<h1>
+				<a href="/user/loggedin/home">
+					User - Audit Log Service API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/user/logout">
+						Logout
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag to display a welcome message to the system user with the system users username and the "_sortedMsg" if the "sortBtn" has been submitted which is displayed in Jinja2 from the data provided in the "audithome.py" file.-->
+		<div id="div1">
+			<h2>Welcome to the User - Audit Log Service API View Customer Accounts Page!</h2>
+			<em>
+				Logged in as {{ _usersUsername }}.
+			</em>
+				<br>
+				<br>
+			<small>
+				{{ _sortedMsg }}
+			</small>
+				<br>
+				<br>
+		</div>
+		<!--Provide a form which allows the system user to sort the customer accounts, a table to display the headings of the customer accouns data, and loops through each of the customer accounts data in the "customerAccounts" table in the "alsDB.db" database and displays that data provided from the "viewcust()" function of the "audithome.py" file displayed using Jinja2.-->
+		<div id="sideDiv">
+			<form action="/user/loggedin/viewcustomers?f=sort" method="POST">
+				<select name="sortbox" id="sortbox">
+					<option value="Customer First Name Ascending Order">Customer First Name Ascending Order</option>
+					<option value="Customer First Name Descending Order">Customer First Name Descending Order</option>
+					<option value="Customer Last Name Ascending Order">Customer Last Name Ascending Order</option>
+					<option value="Customer Last Name Descending Order">Customer Last Name Descending Order</option>
+					<option value="CustomerID Ascending Order">CustomerID Ascending Order</option>
+					<option value="CustomerID Descending Order">CustomerID Descending Order</option>
+				</select>
+				<input type="submit" name="sortBtn" id="sortBtn" class="sortBtn" value="Sort">
+			</form>
+			<table>
+				<thead>
+					<th>
+						Customer ID
+					</th>
+					<th>
+						Date Customer Added
+					</th>
+					<th>
+						Customer First Name
+					</th>
+					<th>
+						Customer Last Name
+					</th>
+					<th>
+						Date of Birth
+					</th>
+					<th>
+						Residential Address
+					</th>
+					<th>
+						Date of Move In
+					</th>
+					<th>
+						Phone Number
+					</th>
+					<th>
+						Email Address
+					</th>
+					<th>
+						Employment Details
+					</th>
+					<th>
+						Date Employment Commenced
+					</th>
+					<th>
+						Employer Name
+					</th>
+					<th>
+						Employer Address
+					</th>
+					<th>
+						Employer Contact Number
+					</th>
+					<th>
+						Length of Time as Self Employed
+					</th>
+					<th>
+						Company Name
+					</th>
+					<th>
+						Company Address
+					</th>
+					<th>
+						Government Benefits Description
+					</th>
+					<th>
+						Gross Monthly Income
+					</th>
+					<th>
+						Yearly Income After Tax
+					</th>
+					<th>
+						Motor Costs Description
+					</th>
+					<th>
+						Motor Costs Amount
+					</th>
+					<th>
+						Food Expenses Description
+					</th>
+					<th>
+						Food Expenses Amount
+					</th>
+					<th>
+						Clothing Expenses Description
+					</th>
+					<th>
+						Clothing Expenses Amount
+					</th>
+					<th>
+						Childcare Costs Description
+					</th>
+					<th>
+						Childcare Costs Amount
+					</th>
+					<th>
+						Housing Expenses Description
+					</th>
+					<th>
+						Housing Expenses Amount
+					</th>
+					<th>
+						Home Rental Costs Description
+					</th>
+					<th>
+						Home Rental Costs Amount
+					</th>
+					<th>
+						Mortgage Repayments Description
+					</th>
+					<th>
+						Mortgage Repayments Amount
+					</th>
+					<th>
+						Utility Costs Description
+					</th>
+					<th>
+						Utility Costs Amount
+					</th>
+					<th>
+						Phone Expenses Description
+					</th>
+					<th>
+						Phone Expenses Amount
+					</th>
+					<th>
+						Other Expenses Description
+					</th>
+					<th>
+						Other Expenses Amount 
+					</th>
+					<th>
+						Total Expenses
+					</th>
+					<th>
+						Customer Username
+					</th>
+					<th>
+						Customer Password
+					</th>
+				</thead>
+				<tbody>
+					{% for each in _customerAccounts %}
+						<tr>
+							{% for info in each %}
+							<td>
+								{{ info }}
+							</td>
+							{% endfor %}
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
+<!--
+CSS contents in the below "style" tags.
+-->
+<style>
+
+	/*
+	Use of width with automatic margining to position the "sideDiv" div which contains the display of the customer accounts.
+	*/
+	#sideDiv
+	{
+		margin: auto;
+	}
+	
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/
+	#div1
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#userNav
+	{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+	
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#userNav a
+	{
+		text-decoration: none;
+	}
+	
+	/*
+	Display for the nav-bar contents to be displayed inline beside each of the list elements of the ordered list.
+	*/	
+	#userNav li
+	{
+		display: inline-block;
+	}
+</style>

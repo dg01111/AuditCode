@@ -1,0 +1,191 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file allows the logged in customer to view and pay the selected self employed audit.
+-->
+<!--Declaration of "/templates/customer/loggedin/viewpayselfemployedaudits.html" file-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/customer/loggedin/viewpayselfemployedaudits.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			Customer - Pay Employed Audit ALS API
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/customer/loggedin/viewpayselfemployedaudits.html" file.-->
+	<body>
+		<!--Nav-bar enabling navigation for the login section of the customer part of the web-app system. To include navigational links to the "/customer/loggedin/customerhome" route and the "/customer/logout" route.-->
+		<nav id="viewPaySelfEmployedNav">
+			<h1>
+				<a href="/customer/loggedin/customerhome">
+					Customer - Audit Log Service API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/customer/logout">
+						Logout
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag to display a welcome message to the customer and the logged in customers username.-->
+		<div id="div1">
+			<h2>
+				Welcome to the Customer - Audit Log Service API View/Pay Self Employed Audit Page!
+			</h2>
+			<em>
+				Logged in as {{ _customerUsername }}.
+			</em>
+		</div>
+			<br>
+			<br>
+			<br>
+		<!--Provide a table of the selected employed customer audit details and a "Pay Now" button to allow the customer to pay the audit.-->
+		<div id="sideDiv">
+			<form action="/customer/loggedin/customerhome?f=viewPaySelfEmployedAuditForm" method="POST">
+				<table>
+					{% for info in _selfEmployedAudits %}
+						<thead>
+							<th>
+								Customer Account ID
+							</th>
+							<th>
+								First Name
+							</th>
+							<th>
+								Last Name
+							</th>
+							<th>
+								Length of Time as Self Employed
+							</th>
+							<th>
+								Company Name
+							</th>
+							<th>
+								Company Address
+							</th>
+							<th>
+								Gross Monthy Income
+							</th>
+							<th>
+								{{ info[5] }}
+							</th>
+							<th>
+								Yearly Income After Tax
+							</th>
+							<th>
+								TAX RETURNS @ 4%
+							</th>
+							<th>
+								PAY BY DATE
+							</th>
+							<th>
+								PAYMENT DETAILS
+							</th>
+							<th>
+								Paid
+							</th>
+						</thead>
+						<tbody>
+							<tr>
+								<input type="hidden" name="auditID" value="{{ info[0] }}">
+								<td>
+									{{ info[2] }}
+								</td>
+								<td>
+									{{ info[3] }}
+								</td>
+								<td>
+									{{ info[4] }}
+								</td>
+								<td>
+									{{ info[6] }}
+								</td>
+								<td>
+									{{ info[7] }}
+								</td>
+								<td>
+									{{ info[8] }}
+								</td>
+								<td>
+									{{ info[9] }}
+								</td>
+								<td>
+									{{ info[10] }}
+								</td>
+								<td>
+									{{ info[11] }}
+								</td>
+								<td>
+									{{ info[12] }}
+								</td>
+								<td>
+									{{ info[13] }}
+								</td>
+								<td>
+									{{ info[14] }}
+								</td>
+								<td>
+									{{ info[15] }}
+								</td>
+							</tr>
+						</tbody>
+					{% endfor %}
+				</table>
+				<button name="payAudit" type="submit">
+					Pay Now
+				</button>
+			</form>
+		</div>
+	</body>
+</html>
+<!--
+CSS contents in the below "style" tags.
+-->
+<style>
+
+	/*
+	Use of width with automatic margining to position the "sideDiv" div which displays a form for the customer to view the selected self employed audit.
+	*/
+	#sideDiv
+	{
+		width: 100%;
+		margin: auto;
+	}
+	
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/
+	#div1
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#viewPaySelfEmployedNav
+	{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+	
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#viewPaySelfEmployedNav a
+	{
+		text-decoration: none;
+	}
+	
+	/*
+	Display for the nav-bar contents to be displayed inline beside info of the list elements of the ordered list.
+	*/	
+	#viewPaySelfEmployedNav li
+	{
+		display: inline-block;
+	}
+</style>

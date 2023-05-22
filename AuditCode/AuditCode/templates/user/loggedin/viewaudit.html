@@ -1,0 +1,446 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file will allow the system user to send an audit to the customer account which was selected on the "/templates/user/loggedin/createsendaudits.html" web-page which can then be viewed by the system user on the "/templates/user/loggedin/home.html" web-page under the "Resources" section.
+-->
+<!--Declaration of "/templates/user/loggedin/viewaudit.html" file-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/user/loggedin/viewaudit.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			User - Send Audit ALS API
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/user/loggedin/viewaudit.html" file.-->
+	<body>
+		<!--Nav-bar enabling navigation for the login section of the user part of the web-app system. To include navigational links to the "/user/loggedin/home" route and the "/user/logout" route.-->
+		<nav id="sendAuditNav">
+			<h1>
+				<a href="/user/loggedin/home">
+					User - Audit Log Service API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/user/logout">
+						Logout
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag to display a welcome message to the system user with the system users username which is displayed in Jinja2 from the data provided in the "audithome.py" file.-->
+		<div id="div1">
+			<h2>
+				Welcome to the User - Audit Log Service API Send Audit Page!
+			</h2>
+			<em>
+				Logged in as {{ _userUsername }}.
+			</em>
+				<br>
+				<br>
+		</div>
+		<!--Display a table of data to send to the customer abssed on the employment status of that customer to be sent to the "submitAudit()" function of the "audithome.py" file.-->
+		<div id="sideDiv">
+			<form action="/user/loggedin/submitaudit?f=submitAudit" method="POST">
+				<input type="hidden" name="EmployedvSelfEmployed" id="EmployedvSelfEmployed" value="{{ _customerAuditDictionary[9] }}">
+				<input type="hidden" id="dateNow" value="{{ _dateNow }}">
+				<table>
+					{% if _customerAuditDictionary[9] == "Employed" %}
+						<thead>
+							<th>
+								Customer ID
+							</th>
+							<th>
+								First Name
+							</th>
+							<th>
+								Last Name
+							</th>
+							<th>
+								Date Employment Commenced
+							</th>
+							<th>
+								Employer Name
+							</th>
+							<th>
+								Employer Address
+							</th>
+							<th>
+								Employer Contact Number
+							</th>
+							<th>
+								Gross Monthy Income
+							</th>
+							<th>			
+								<div id="grossMonthlyIncomeTaxRateLabel" name="grossMonthlyIncomeTaxRateLabel"></div>
+								<input type="hidden" name="grossMonthlyIncomeTaxRateInput" id="grossMonthlyIncomeTaxRateInput">
+							</th>
+							<th>
+								Yearly Income After Tax
+							</th>
+							<th>
+								TAX RETURNS @ 1%
+							</th>
+							<th>
+								PAID BY DATE
+							</th>
+							<th>
+								PAYMENT DETAILS
+							</th>
+						</thead>
+					{% endif %}
+					{% if _customerAuditDictionary[9] == "Self Employed" %}
+						<thead>
+							<th>
+								Customer Account ID
+							</th>
+							<th>
+								First Name
+							</th>
+							<th>
+								Last Name
+							</th>
+							<th>
+								Length of Time as Self Employed
+							</th>
+							<th>
+								Company Name
+							</th>
+							<th>
+								Company Address
+							</th>
+							<th>
+								Gross Monthy Income
+							</th>
+							<th>
+								<div id="grossMonthlyIncomeTaxRateLabel" name="grossMonthlyIncomeTaxRateLabel"></div>
+								<input type="hidden" name="grossMonthlyIncomeTaxRateInput" id="grossMonthlyIncomeTaxRateInput">
+							</th>							
+							<th>
+								Yearly Income After Tax
+							</th>
+							<th>
+								TAX RETURNS @ 4%
+							</th>
+							<th>
+								PAY BY DATE
+							</th>
+							<th>
+								PAYMENT DETAILS
+							</th>
+							<th>
+								Paid (YES/NO)
+							</th>
+						</thead>
+					{% endif %}
+					<tbody>
+						{% if _customerAuditDictionary[9] == "Employed" %}
+							<tr>
+								<td>
+									<input type="text" name="customerAccountID" value="{{ _customerAuditDictionary[0] }}">
+								</td>
+								<td>
+									<input type="text" name="customerFirstName" value="{{ _customerAuditDictionary[2] }}">
+								</td>
+								<td>
+									<input type="text" name="customerLastName" value="{{ _customerAuditDictionary[3] }}">
+								</td>
+								<td>
+									<input type="text" name="dateOfEmployment" value="{{ _customerAuditDictionary[10] }}">
+								</td>
+								<td>
+									<input type="text" name="employerName" value="{{ _customerAuditDictionary[11] }}">
+								</td>
+								<td>
+									<input type="text" name="employerAddress" value="{{ _customerAuditDictionary[12] }}">
+								</td>				
+								<td>
+									<input type="text" name="employerContactNumber" value="{{ _customerAuditDictionary[13] }}">
+								</td>				
+								<td>
+									<input type="text" name="grossMonthlyIncomeTotal" id="grossMonthlyIncomeTotal" value="{{ _customerAuditDictionary[18] }}">
+								</td>			
+								<td>
+									<input type="text" name="grossMonthlyIncomeValue" id="grossMonthlyIncomeValue">		
+								</td>
+								<td>
+									<input type="text" name="YearlyIncomeAfterTax" id="YearlyIncomeAfterTax" value="{{ _customerAuditDictionary[19] }}">
+								</td>
+								<td>
+									<input type="text" name="taxRate1PerCent" id="taxRate1PerCent">
+								</td>
+								<td>	
+									<input type="text" name="auditDate" id="auditDate">
+								</td>
+								<td>
+									<input type="text" name="auditAddress" value="Audit API, George Street, Colorado">
+								</td>	
+							</tr>
+						{% endif %}
+						{% if _customerAuditDictionary[9] == "Self Employed" %}
+							<tr>
+								<td>
+									<input type="text" name="customerAccountID" value="{{ _customerAuditDictionary[0] }}">
+								</td>
+								<td>
+									<input type="text" name="customerFirstName" value="{{ _customerAuditDictionary[2] }}">
+								</td>
+								<td>
+									<input type="text" name="customerLastName" value="{{ _customerAuditDictionary[3] }}">
+								</td>
+								<td>
+									<input type="text" name="lengthOfTimeAsSelfEmployed" id="lengthOfTimeAsSelfEmployed" value="{{ _customerAuditDictionary[14] }}">
+								</td>
+								<td>
+									<input type="text" name="companyName" id="companyName" value="{{ _customerAuditDictionary[15] }}">
+								</td>
+								<td>
+									<input type="text" name="companyAddress" id="companyAddress" value="{{ _customerAuditDictionary[16] }}">
+								</td>
+								<td>
+									<input type="text" name="grossMonthlyIncomeTotal" id="grossMonthlyIncomeTotal" value="{{ _customerAuditDictionary[18] }}">
+								</td>			
+								<td>
+									<input type="text" name="grossMonthlyIncomeValue" id="grossMonthlyIncomeValue">
+								</td>							
+								<td>
+									<input type="text" name="YearlyIncomeAfterTax" id="YearlyIncomeAfterTax" value="{{ _customerAuditDictionary[19] }}">
+								</td>							
+								<td>
+									<input type="text" name="taxRate4PerCent" id="taxRate4PerCent">
+								</td>
+								<td>	
+									<input type="text" name="auditDate" id="auditDate">
+								</td>
+								<td>
+									<input type="text" name="auditAddress" value="Audit API, George Street, Colorado">
+								</td>	
+								<td>	
+									<input type="text" name="paid" id="paid" value="NO">
+								</td>
+							</tr>
+						{% endif %}
+					</tbody>
+				</table>
+					<br>
+				<button name="Send Audit" type="submit">
+					Send Audit
+				</button>
+			</form>
+		</div>
+	</body>
+</html>
+<!--JavaScript contains the calculations of tax and date to be loaded on the table in the above HTML code.-->
+<script type="text/javascript">
+
+	//Load and run this JavaScript code when the "/templates/user/loggedin/viewaudit.html" web-page is loaded which will calculate the tax returns of the customer and provide the date that the audit should be paid by.
+	window.onload = function()
+	{
+	
+		//Store the "grossMonthlyIncomeTotal" value from the customer account in the "grossMonthlyIncome" variable to calculate the amount of tax the customer takes home each month depending on the customers earnings.
+		var grossMonthlyIncome = document.getElementById('grossMonthlyIncomeTotal').value;
+		
+		//Use the "parseFloat" method to change the "grossMonthlyIncome" variable to a usable floated numerical value so the tax based on the customers earnings can be calculated.
+		var _grossMonthlyIncome = parseFloat(grossMonthlyIncome);
+		
+		//Calculate by multiplying the tax rate at "45%" the customers gross monthly income to be displayed in the customers audit.
+		var _45pc = _grossMonthlyIncome * 0.45;
+		
+		//Calculate by multiplying the tax rate at "40%" the customers gross monthly income to be displayed in the customers audit.
+		var _40pc = _grossMonthlyIncome * 0.40;
+		
+		//Calculate by multiplying the tax rate at "20%" the customers gross monthly income to be displayed in the customers audit.
+		var _20pc = _grossMonthlyIncome * 0.20;
+		
+		//Initialise the "_0pc" variable to the value "0" to display as the gross monthly income in the customers audit.
+		var _0pc = "0";
+		
+		//Store the "YearlyIncomeAfterTax" input value of the customers Yearly Income After Tax amount to calculate the yearly tax returns that the customer has to pay.
+		var yearlyIncomeAfterTax = document.getElementById('YearlyIncomeAfterTax').value;
+		
+		//Use the "parseFloat" method to change the "yearlyIncomeAfterTax" variable to a usable floated numerical value so the tax returns can be calculated based on the customers yearly earnings.
+		var _yearlyIncomeAfterTax = parseFloat(yearlyIncomeAfterTax);
+		
+		//Calculate the tax rate of "4" percent of the income earned of the self-employed customer.
+		var _taxRate4PerCent = _yearlyIncomeAfterTax * .04;
+		
+		//Calculate the tax rate of "1" percent of the income earned of the employed customer.
+		var _taxRate1PerCent = _yearlyIncomeAfterTax * .01;
+
+		//If the customers gross monthly income is above $12,500, then the total of the monthly tax is calculated at 45% of the gross monthly income of the customer and displayed and put in the "grossMonthlyIncomeValue" input field, the "grossMonthlyIncomeTaxRateLabel" label for the HTML table is changed to "TAX @ 45%" to display on the audit, and the value of the hidden input in the header is changed to "TAX @ 45%".
+		if (_grossMonthlyIncome >= 12500)
+		{
+		
+			//Change the value of the input with the "grossMonthlyIncomeValue" elemental ID to the value of the variable "_45pc".
+			document.getElementById('grossMonthlyIncomeValue').value = _45pc;
+			
+			//Change the value of the table header with the "grossMonthlyIncomeTaxRateLabel" elemental ID to display as the table heading of the audit that the tax is charged at "45%", displayed as "TAX @ 45%".
+			document.getElementById('grossMonthlyIncomeTaxRateLabel').innerHTML = "TAX @ 45%";			
+			
+			//Change the value of the hidden input with the "grossMonthlyIncomeTaxRateInput" elemental ID to contain "TAX @ 45%" so the value can be retrieved on the "submitaudit()" function in the "audithome.py" file. 
+			document.getElementById('grossMonthlyIncomeTaxRateInput').value = "TAX @ 45%";
+		}
+		
+		//If the customers gross monthly income is above $4189.50 and less than $12,500, then the total of the monthly tax is calculated at 40% of the gross monthly income of the customer and displayed and put in the "grossMonthlyIncomeValue" input field, the "grossMonthlyIncomeTaxRateLabel" label for the HTML table is changed to "TAX @ 40%" to display on the audit, and the value of the hidden input in the header is changed to "TAX @ 40%".
+		else if (_grossMonthlyIncome >= 4189.50)
+		{
+		
+			//Change the value of the input with the "grossMonthlyIncomeValue" elemental ID to the value of the variable "_40pc".
+			document.getElementById('grossMonthlyIncomeValue').value = _40pc;
+			
+			//Change the value of the table header with the "grossMonthlyIncomeTaxRateLabel" elemental ID to display as the table heading of the audit that the tax is charged at "40%", displayed as "TAX @ 40%".
+			document.getElementById('grossMonthlyIncomeTaxRateLabel').innerHTML = "TAX @ 40%";
+			
+			//Change the value of the hidden input with the "grossMonthlyIncomeTaxRateInput" elemental ID to contain "TAX @ 40%" so the value can be retrieved on the "submitaudit()" function in the "audithome.py" file. 
+			document.getElementById('grossMonthlyIncomeTaxRateInput').value = "TAX @ 40%";
+		}
+
+		//If the customers gross monthly income is above $1047.50 and less than $4189.50, then the total of the monthly tax is calculated at 20% of the gross monthly income of the customer and displayed and put in the "grossMonthlyIncomeValue" input field, the "grossMonthlyIncomeTaxRateLabel" label for the HTML table is changed to "TAX @ 20%" to display on the audit, and the value of the hidden input in the header is changed to "TAX @ 20%".
+		else if (_grossMonthlyIncome >= 1047.50)
+		{
+		
+			//Change the value of the input with the "grossMonthlyIncomeValue" elemental ID to the value of the variable "_20pc".
+			document.getElementById('grossMonthlyIncomeValue').value = _20pc;
+			
+			//Change the value of the table header with the "grossMonthlyIncomeTaxRateLabel" elemental ID to display as the table heading of the audit that the tax is charged at "20%", displayed as "TAX @ 20%".
+			document.getElementById('grossMonthlyIncomeTaxRateLabel').innerHTML = "TAX @ 20%";		
+
+			//Change the value of the hidden input with the "grossMonthlyIncomeTaxRateInput" elemental ID to contain "TAX @ 20%" so the value can be retrieved on the "submitaudit()" function in the "audithome.py" file. 
+			document.getElementById('grossMonthlyIncomeTaxRateInput').value = "TAX @ 20%";
+		}
+		
+		//If the customers gross monthly income is above $0 or equal to $0 and less than $1047.50, then the total of the monthly tax is calculated at 0% of the gross monthly income of the customer and displayed and put in the "grossMonthlyIncomeValue" input field, the "grossMonthlyIncomeTaxRateLabel" label for the HTML table is changed to "TAX @ 0%" to display on the audit, and the value of the hidden input in the header is changed to "TAX @ 0%".
+		else if (_grossMonthlyIncome >= 0)
+		{
+		
+			//Change the value of the input with the "grossMonthlyIncomeValue" elemental ID to the value of the variable "_0pc".
+			document.getElementById('grossMonthlyIncomeValue').value = _0pc;			
+
+			//Change the value of the table header with the "grossMonthlyIncomeTaxRateLabel" elemental ID to display as the table heading of the audit that the tax is charged at "0%", displayed as "TAX @ 0%".
+			document.getElementById('grossMonthlyIncomeTaxRateLabel').innerHTML = "TAX @ 0%";
+			
+			//Change the value of the hidden input with the "grossMonthlyIncomeTaxRateInput" elemental ID to contain "TAX @ 0%" so the value can be retrieved on the "submitaudit()" function in the "audithome.py" file. 
+			document.getElementById('grossMonthlyIncomeTaxRateInput').value = "TAX @ 0%";
+		}
+		
+		//Create a variable "EmployedVsSelfEmployed" which has the value of either the customer being "Employed" or "Self Employed" to check if customer is employed or self employed for 1 or 4 percent TAX rate.
+		var EmployedVsSelfEmployed = document.getElementById('EmployedvSelfEmployed').value;
+		
+		//If the customer is Employed then the tax rate value for the tax returns based on the customer paying 1% of the customers yearly income after tax and the input field "taxRate1PerCent"'s value is changed to the variable "_taxRate1PerCent"'s value.  
+		if (EmployedVsSelfEmployed === "Employed")
+		{
+		
+			//Change the value of the input field with the elemental ID "taxRate1PerCent" to the value of the "_taxRate1PerCent" variable.
+			document.getElementById('taxRate1PerCent').value = _taxRate1PerCent;
+		}
+		
+		//If the customer is Self Employed then the tax rate value for the tax returns based on the customer paying 4% of the customers yearly income after tax and the input field "taxRate4PerCent"'s value is changed to the variable "_taxRate4PerCent"'s value.  
+		else if (EmployedVsSelfEmployed === "Self Employed")
+		{
+		
+			//Change the value of the input field with the elemental ID "taxRate4PerCent" to the value of the "_taxRate4PerCent" variable.
+			document.getElementById('taxRate4PerCent').value = _taxRate4PerCent;			
+		}
+		
+		//Create a variable "auditDate" to store the value of the hidden input which has the value taken from the "viewaudit()" function in the "audithome.py" file.
+		var auditDate = document.getElementById('dateNow').value;
+		
+		//Use the substring method to get the months values of the "auditDate" variable which is stored in the "subStrDateNow" variable.
+		var subStrDateNow = auditDate.substring(5,7);
+		
+		//Use the "parseInt" method to change the "subStrDateNow" variable to an integer. The integered value will then be added to 3 and the result will be stored in the "auditDateNow" variable.
+		var auditDateNow = parseInt(subStrDateNow) + 3;
+
+		//If the "auditDateNow" variable is greater than 12 months in total, then the month the audit should be paid is subtracted by "12" stored in the "subAuditDateNow" variable provided by a "0" in front of the value in the "_auditMonth" variable which then replaces the original months value in the "auditDate" variable.and is stored in the "auditNowDate" variable to be put in the input field with the elemental ID "auditDate"
+		if (auditDateNow > 12)
+		{
+			
+			//Create a variable "subAuditDateNow" to subtract 12 months from the "auditDateNow" variable to get the number of the month which the audit should be paid.
+			var subAuditDateNow = auditDateNow - 12;
+			
+			//Create a variable "_strSubAuditDateNow" to change the "subAuditDateNow" variable to a string variable.
+			var _strSubAuditDateNow = String(subAuditDateNow);
+			
+			//Create a variable "_auditMonth" to add a "0" to the beginning of the "_strSubAuditDateNow" variable.
+			var _auditMonth = "0" + _strSubAuditDateNow; 
+			
+			//Create a variable "auditDateNow" to replace in the "auditDate" variable the variable "_auditMonth".
+			var auditNowDate = auditDate.replace(subStrDateNow, _auditMonth);
+		}
+		
+		//If the "auditDateNow" variable is one month or less than 10 months in total, then the month the audit should be paid remains as the substring value of the "subStrDateNow" variable with three added on to be converted to a String variable and stored in the "strAuditDateNow" variable provided by a "0" in front of the value in the "_auditMonth" variable which then replaces the original months value in the "auditDate" variable.and is stored in the "auditNowDate" variable to be put in the input field with the elemental ID "auditDate"
+		else if (auditDateNow > 0 && auditDateNow < 10)
+		{
+			
+			//Create a variable "strAuditDateNow" which converts the "auditDateNow" variable to a String variable.
+			var strAuditDateNow = String(auditDateNow);
+			
+			//Create a variable "_auditMonth" to add a "0" to the beginning of the "strAuditDateNow" variable.
+			var _auditMonth = "0" + strAuditDateNow;
+			
+			//Create a variable "auditDateNow" to replace in the "auditDate" variable the variable "_auditMonth".
+			var auditNowDate = auditDate.replace(subStrDateNow, _auditMonth);
+		}
+		
+		//If the value of the month is "10", "11" or "12" then the audits date will be replaced with the "auditDateNow" variable which will be stored in the "auditNowDate" variable.
+		else
+		{
+			
+			//Create a variable "auditDateNow" to replace in the "auditDate" variable the variable "auditDateNow".
+			var auditNowDate = auditDate.replace(auditNowDate, auditDateNow);
+		}
+		
+		//Change the value of the input field with the elemental ID "auditDate"s to the "auditNowDate" variables value which was created in the "if". "else if" and "else" statement above.
+		document.getElementById('auditDate').value = auditNowDate;
+	}
+</script>
+<!--
+CSS contents in the below "style" tags.
+-->
+<style>
+
+	/*
+	Use of width with automatic margining to position the "userLoginDiv" div which contains the customer audit to be submitted and sent to the customer by the system user.
+	*/
+	#sideDiv
+	{
+		width: 100%;
+		margin: auto;
+	}
+	
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/
+	#div1
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#sendAuditNav
+	{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+	
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#sendAuditNav a
+	{
+		text-decoration: none;
+	}
+	
+	/*
+	Display for the nav-bar contents to be displayed inline beside each of the list elements of the ordered list.
+	*/	
+	#sendAuditNav li
+	{
+		display: inline-block;
+	}
+</style>

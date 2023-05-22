@@ -1,0 +1,190 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file will allow the logged in customer to view the audits that have been sent to that customer by a system user.
+-->
+<!--Declaration of "/templates/customer/loggedin/viewpayaudit.html" file-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/customer/loggedin/viewpayaudit.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			Customer - Home ALS API
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/customer/loggedin/viewpayaudit.html" file.-->
+	<body>
+		<!--Nav-bar enabling navigation for the login section of the customer part of the web-app system. To include navigational links to the "/customer/loggedin/customerhome" route and the "/customer/logout" route.-->
+		<nav id="viewPayNav">
+			<h1>
+				<a href="/customer/loggedin/customerhome">
+					Customer - Audit Log Service API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/customer/logout">
+						Logout
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag to display a welcome message to the system user with a "_loginFailMsg" displayed if the wrong user credentials have been entered.-->
+		<div id="div1">
+			<h2>
+				Welcome to the Customer - Audit Log Service API View/Pay Audit Page!
+			</h2>
+			<em>
+				Logged in as {{ _customerUsername }}.
+			</em>
+		</div>
+			<br>
+			<br>
+			<br>
+		<!--Provide the customer audit details to allow the customer to select an audit to pay.-->
+		<div id="sideDiv">
+				<h3>
+					View/Pay Audit(s)
+				</h3>
+				<h4>
+					<u>
+						Employed Audit(s)
+					</u>
+				</h4>
+				<table>
+					<thead>
+						<th>
+							Audit ID
+						</th>
+						<th>
+							Audit Date
+						</th>
+						<th>
+							Paid
+						</th>
+						<th>
+							View/Pay Audit
+						</th>
+					</thead>
+					<tbody>
+						{% for info in _employedAudits %}
+							<tr>
+								<td>
+									{{ info[0] }}
+								</td>
+								<td>
+									{{ info[1] }}
+								</td>
+								<td>
+									{{ info[16] }}
+								</td>
+								<td>
+								<form action="/customer/loggedin/viewpayemployedaudits?f=viewPayEmployedAuditForm" method="POST"> 
+									<input type="hidden" name="auditID" value="{{ info[0] }}">
+									<input type="hidden" name="eE" value="Employed">
+									<button name="viewEmployedAuditBtn" type="submit">
+										View/Pay Audit
+									</button>
+								</form>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				<h4>
+					<u>
+						Self Employed Audit(s)
+					</u>
+				</h4>
+				<table>
+					<thead>
+						<th>
+							Audit ID
+						</th>
+						<th>
+							Audit Date
+						</th>
+						<th>
+							Paid
+						</th>
+						<th>
+							View/Pay Audit
+						</th>
+					</thead>
+					<tbody>
+					{% for info in _selfEmployedAudits %}
+						<tr>
+							<td>
+								{{ info[0] }}
+							</td>
+							<td>
+								{{ info[1] }}
+							</td>
+							<td>
+								{{ info[15] }}
+							</td>
+							<td>
+								<form action="/customer/loggedin/viewpayselfemployedaudits?f=viewPaySelfEmployedAuditForm" method="POST"> 
+									<input type="hidden" name="auditID" value="{{ info[0] }}">
+									<input type="hidden" name="eE" value="Self Employed">
+									<button name="viewSelfEmployedAuditBtn" type="submit">
+										View/Pay Audit
+									</button>
+								</form>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
+<!--
+CSS contents in the below "style" tags.
+-->
+<style>
+
+	/*
+	Use of width with automatic margining to position the "sideDiv" div which displays a form for the customer to view the audits of that customer account.
+	*/
+	#sideDiv
+	{
+		width: 50%;
+		margin: auto;
+	}
+	
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/
+	#div1
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#viewPayNav
+	{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+	
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#viewPayNav a
+	{
+		text-decoration: none;
+	}
+	
+	/*
+	Display for the nav-bar contents to be displayed inline beside each of the list elements of the ordered list.
+	*/	
+	#viewPayNav li
+	{
+		display: inline-block;
+	}
+</style>

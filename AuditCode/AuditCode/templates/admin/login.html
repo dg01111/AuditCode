@@ -1,0 +1,129 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file will allow an admin user to login to the ALS API admin part of the web-app to create or change users of the web-app system. The main purpose is to keep secure access to the credentials of the users of the system who are authorised to create customer accounts within another section of the web-app system.
+-->
+<!--Declaration of "/templates/admin/login.html" file-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/admin/login.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			Admin - Login ALS API
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/admin/login.html" file.--> 	
+	<body>
+		<!--Nav-bar enabling navigation for the login section of the admin part of the web-app system. To include navigational links to this admin login web-page, also to the System User login web-page and the customer login web-page.--> 
+		<nav id="navAdminLogin">
+			<h1>
+				<a href="/admin/">
+					Admin - Audit Log Service API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/user/">
+						User
+					</a>
+				</li>
+					|
+				<li>
+					<a href="/customer/">
+						Customer
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag, with an error message to inform the web-app system user that the wrong credentials had been entered which is provided from the "audithome.py" file located within "adminhome()" function displayed using Jinja2.-->
+		<div id="div1">
+			<h2>
+				Welcome to the Admin - Audit Log Service API Login Page!
+			</h2>
+			<em>
+				{{ _adminLoginErrorMsg }}
+				{{ _loggedOutMsg }}
+			</em>			
+		</div>
+			<br>
+			<br>
+			<br>
+		<div id="adminLoginFormDiv">
+			<!--Send this form data to "/admin/loggedin/home" route within the "audithome.py" file, regarding that when the form is submitted then will run through the ('f') == 'adminLogin' to process the username and password entered on this form when the form is submitted to either allow access to the "/admin/loggedin/home.html" web-page ot to refresh the user to this "/admin/login.html" web-page responding with the "_adminLoginErrorMsg" to the user if the wrong credentials were entered.-->
+			<form method="POST" action="/admin/loggedin/home?f=adminLogin">
+				<h3>
+					<u>
+						Administrator Login
+					</u>
+				</h3>
+				<label>
+					Username
+				</label>
+					<br>
+				<input type="text" name="adminUsername" required="True">
+					<br>
+					<br>
+				<label>
+					Password
+				</label>
+					<br>
+				<input type="password" name="adminPassword" required="True">
+					<br>
+					<br>
+					<br>
+				<button name="adminLoginBtn" type="submit">
+					Login
+				</button>
+			</form>
+		</div>
+	</body>
+</html>
+<!--
+CSS contents in the below "style" tags.
+-->
+<style>
+
+	/*
+	Use of width with automatic margining to position the "adminLoginFormDiv" which contains the administrator login form.
+	*/
+	#adminLoginFormDiv
+	{
+		width: 33%;
+		margin: auto;
+	}
+	
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/
+	#div1
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#navAdminLogin
+	{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+	
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#navAdminLogin a
+	{
+		text-decoration: none;
+	}
+	
+	/*
+	Display for the nav-bar contents to be displayed inline beside each of the list elements of the ordered list.
+	*/
+	#navAdminLogin li
+	{
+		display: inline-block;
+	}
+</style>

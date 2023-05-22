@@ -1,0 +1,155 @@
+<!--
+Author: Danielle Gorman
+Purpose: This HTML file will allow an admin user to delete system user credentials provided from the "deletesystemuser()" function which are displayed within a table. When the "DELETE" button has been clicked beside a system users details then the details are deleted and the administrative user is returned to "/admin/loggedin/deletesystemuser.html" web-page.
+-->
+<!--Declaration of "/templates/admin/loggedin/viewsystemusers.html" file-->
+<!doctype HTML>
+<html>
+	<!--Header section of the HTML "/templates/admin/loggedin/deletesystemuser.html" file.-->
+	<head>
+		<!--Title of the web-page-->
+		<title>
+			Admin - Delete System User ALS API
+		</title>
+	</head>
+	<!--Body section of the HTML "/templates/admin/loggedin/deletesystemuser.html" file.-->
+	<body>
+		<!--Nav-bar enabling navigation for the login section of the admin part of the web-app system. To include navigational links to the logged in admin home web-page, with also a logout option for the administrative user.--> 
+		<nav id="deleteSystemUserNav">
+			<h1>
+				<a href="/admin/loggedin/home">
+					Admin - Audit Log Service API
+				</a>
+			</h1>
+			<ol>
+				<li>
+					<a href="/admin/logout">
+						Logout
+					</a>
+				</li>
+			</ol>
+		</nav>
+		<!--Provide a welcome heading displayed within the "div1" div tag to display the administrative users username which is displayed with the data from the "audithome.py" file using Jinja2.-->
+		<div id="div1">
+			<h2>
+				Welcome to the Admin - Audit Log Service API Delete System User Page!
+			</h2>
+			<em>
+				Logged in as {{ _adminUsername }}.	
+			</em>
+				<br>
+				<br>
+			<small>
+				Note: To delete a system users details, select the system user to delete by clicking the "DELETE" button next to that system users details.
+			</small>
+				<br>
+				<br>
+			<small>
+				{{ _deletedSystemUserMsg }}
+			</small>
+		</div>
+			<br>
+		<!--"deletesystemuser" provides a table header and a table body to include the details all of the system users details, which have been added on the "/admin/loggedin/addsystemuser" route of the web-app system, and retrieved for viewing on this web-page from the "deletesystemuser()" function located within the "audithome.py" file and the administrative user can delete each of the system users credentials by pressing the "DELETE" button located beside each of the system users details. -->
+		<div id="deletesystemuser">
+			<h4>
+				<u>
+					Delete System User
+				</u>
+			</h4>
+			<table>
+				<thead>
+					<th>
+						System User ID
+					</th>
+					<th>
+						System Users Name
+					</th>
+					<th>
+						Username
+					</th>
+					<th>
+						Password
+					</th>
+					<th>
+						DELETE
+					</th>
+				</thead>
+				<tbody>
+					{% for user in _userDetails %}
+						<tr>
+							<td>
+								{{ user[0] }}
+							</td>
+							<td>
+								{{ user[2] }}
+							</td>
+							<td>
+								{{ user[3] }}
+							</td>
+							<td>
+								{{ user[4] }}
+							</td>
+							<td>
+								<form method="POST" action="/admin/loggedin/deletesystemuser?f=deletesystemuser">
+									<input type="hidden" value="{{ user[0] }}" name="sysUserID">
+									<button name="deleteSystemUserBtn" type="submit">
+										DELETE
+									</button>
+								</form>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
+<!--
+CSS contents in the below "style" tags.
+-->
+<style>
+
+	/*
+	Use of width with automatic margining to position the "deletesystemuser" div which contains the table of system users available for deletion by the administrative user.
+	*/
+	#deletesystemuser
+	{
+		width: 50%;
+		margin: auto;
+	}
+
+	/*
+	Position the "div1" div which holds the welcome heading positioned 8% to the left of the web-page.
+	*/	
+	#div1
+	{
+		width: 84%;
+		margin: auto;
+	}
+	
+	/*
+	Syling of the nav-bar containing the background-color of the nav-bar and color of the text. 
+	*/
+	#deleteSystemUserNav
+	{
+		width: 100%;
+		background-color: #D3D3D3;
+		color: #555fff;
+	}
+	
+	/*
+	Remove the hyper-links from the navigation anchors "a"s.
+	*/
+	#deleteSystemUserNav a
+	{
+		text-decoration: none;
+	}
+	
+	/*
+	Display for the nav-bar contents to be displayed inline beside each of the list elements of the ordered list.
+	*/	
+	#deleteSystemUserNav li
+	{
+		display: inline-block;
+	}
+	</style>
